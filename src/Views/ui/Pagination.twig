@@ -1,0 +1,23 @@
+<nav aria-label="Page navigation">
+  <ul class="inline-flex items-center -space-x-px text-base h-10 list-none">
+    <li>
+        {% if previousPage != -1 %}
+            <a rel="prev" href="{{baseUrl}}?page={{previousPage}}" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-primary-foreground bg-primary border border-e-0 border-border rounded-s-lg hover:bg-primary/50 hover:text-foreground">Back</a>
+        {% else %}
+            <a rel="prev" href="#" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-primary-foreground bg-primary border border-e-0 border-border rounded-s-lg hover:bg-primary/50 hover:text-foreground">Back</a>
+        {% endif %}
+    </li>
+    {% if currentPage is defined %}
+        <li>
+            <a tite="Current Page Number {{ currentPage }}" href="{{baseUrl}}?page={{currentPage}}" aria-current="page" class="rounded-full aspect-1 flex items-center justify-center px-4 h-14 w-14 text-primary-foreground border-2 border-border bg-foreground scale-125">{{ currentPage }}</a>
+        </li>
+    {% endif %}
+    <li>
+        {% if nextPage != -1 %}
+            <a rel="next" href="{{baseUrl}}?page={{nextPage}}" class="flex items-center justify-center px-4 h-10 leading-tight text-primary-foreground bg-primary border border-border rounded-e-lg hover:bg-primary/50 hover:text-foreground">Next</a>
+        {% else %}
+            <button type="button" class="flex items-center justify-center px-4 h-10 leading-tight text-primary-foreground bg-primary border border-border rounded-e-lg hover:bg-primary/50 hover:text-foreground">End</button>
+        {% endif %}
+    </li>
+  </ul>
+</nav>

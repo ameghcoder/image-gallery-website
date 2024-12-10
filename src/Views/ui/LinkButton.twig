@@ -1,0 +1,9 @@
+{% if primaryBtn == true %}
+    <a href="{{ href }}" class="btn bg-primary">
+        {{ btnText }}
+    </a>
+{% else %}
+    <a href="{{ href }}" class="btn bg-secondary">
+        {{ btnText }}
+    </a>
+{% endif %}

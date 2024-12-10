@@ -1,0 +1,100 @@
+{% extends './layout.twig' %}
+
+{% block title %}
+    4k Desktop & Mobile Wallpaper | Gloztik.com
+{% endblock %}
+
+{% block content %}
+    {# Hero Section #}
+    <div class="-mt-20 md:-mt-28 lg:-mt-36 hero-section-bg" data-rellax-speed="5">
+        <div class="w-full h-screen max-h-screen pt-20 md:pt-28 lg:pt-36 relative">
+            <!-- Banner Title -->
+             <div class="w-full absolute left-0 top-1/2 -translate-y-1/2 flex flex-col gap-4 items-center justify-center">
+                <strong class="text-center text-4xl lg:text-6xl xl:text-8xl font-black uppercase text-primary txt-stroke">
+                    gloztik.com
+                </strong>
+            </div>
+            <!-- Search Wallpapers -->
+            <div class="w-full bg-background/25 backdrop-blur-2xl absolute bottom-0 left-0">
+                <!-- Suffle Wallpaper -->
+                 <button type="button" class="absolute -top-14 right-4 uppercase px-4 py-2 border border-border rounded-md bg-secondary z-50" id="suffle-wallpaper">
+                     Suffle Wallpaper
+                 </button>
+                <form class="flex items-center overflow-hidden" action="/search" method="get">
+                    <input type="search" name="q" class="bg-background rounded-none p-8" placeholder="Search 4k, iPhone, Android, Nature, Desktop Wallpapers and More" />
+                    <button type="submit" class="bg-primary border-none rounded-none p-8 text-primary-foreground font-bold text-lg">Search</button>
+                </form>
+                {% 
+                    include './ui/HashTag.twig' with tags
+                %}
+            </div>
+        </div>
+    </div>
+
+    {# Bento Grid #}
+    {% include './ui/Bento.twig' %}
+
+    {# Categories Text #}
+    {% include './ui/CategoryTextSlider.twig' with categories %}
+
+    {# Wallpapers #}
+    <div class="w-full h-auto flex items-center justify-center">
+        <div class="w-full max-w-screen-xl h-full mx-auto flex flex-col gap-8 py-4 md:py-8 lg:py-12 px-4">
+            <div class="flex flex-col gap-4 items-center">
+                <strong class="text-lg md:text-2xl lg:text-4xl text-muted-foreground">
+                    Trending Wallpapers
+                </strong>
+            </div>
+            <div class="p-2 shadow-md rounded-md border border-border">
+                <div class="columns-2 sm:columns-3 md:columns-4 gap-2 md:gap-4">
+                    {% include './ui/WallpaperCard.twig' with wallpapers %}
+                </div>
+            </div>
+            <div class="max-w-sm">
+                {% 
+                    include './ui/LinkButton.twig' with 
+                    {
+                        primaryBtn: true,
+                        btnText: "View All",
+                        href: "/explore",
+
+                    }
+                %}
+            </div>
+        </div>
+    </div>
+
+    {# Scripts For Hero Section Suffle Wallpapers #}
+    <script type="text/javascript">
+      
+        const heroSectionSuffleWallpaper = $id("suffle-wallpaper");
+        heroSectionSuffleWallpaper.addEventListener('click', () => {
+            const winWidth = window.innerWidth;
+            let api = "/api/bgsuffle";
+            if(winWidth > 768){
+                api = "/api/bgsuffle?device=c";
+            } else{
+                api = "/api/bgsuffle?device=a";
+            }
+
+            fetchDataVersion2(api, "GET")
+            .then(resp => {
+                let url = resp['url'];
+                $(".hero-section-bg").style.backgroundImage = `url(${url})`;
+                localStorage.setItem("heroSectionWallpaper", url);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        })
+
+        const homeHeroSectionInit = () => {
+            let bgUrl = localStorage.getItem("heroSectionWallpaper");
+            if(bgUrl && bgUrl != 'undefined'){
+                $(".hero-section-bg").style.backgroundImage = `url(${localStorage.getItem("heroSectionWallpaper")})`;
+            }
+        }
+
+        document.readyState == "interactive" ? homeHeroSectionInit() : document.addEventListener("DOMContentLoaded", homeHeroSectionInit());
+    </script>
+{% endblock %}

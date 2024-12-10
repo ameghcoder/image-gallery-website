@@ -1,0 +1,69 @@
+<div class="w-full h-full min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-screen-xl h-full mx-auto flex flex-col gap-8 py-4 md:py-8 lg:py-12 px-4">
+        <div class="flex flex-col gap-4 items-center">
+            <strong class="text-lg md:text-2xl lg:text-4xl text-muted-foreground">
+                Know more About
+            </strong>
+            <a href="https://gloztik.com" alt="4k desktop, android and iphone wallpapers" class="font-semibold text-muted-foreground">
+                GLOZTIK.COM
+            </a>
+        </div>
+        <div class="space-y-2">
+            <div class="w-full h-1/3 grid grid-cols-1 lg:grid-cols-2 gap-2">
+                <div class="border border-border rounded-md p-4 md:p-8 space-y-4 flex flex-col justify-between">
+                    <img class="w-20 h-20 " src="{{ logoWithoutText }}" alt="gloztik logo">
+                    <div>
+                        <h3>
+                            Hi, I'm Gloztik, <br> give a cool look to your Desktop or Mobile.
+                        </h3>
+                    </div>
+                    <a class="inline-flex underline text-sm" href="#">Explore Wallpaper</a>                
+                </div>
+                <div>
+                    <h2 class="hidden lg:block">Follow Us</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <a href="/" class="border border-border shadow-md rounded-md flex items-center justify-center bg-white  aspect-2 group">
+                            <img class="w-20 h-20 group-hover:scale-125 transition" src="{{ logoWithoutText }}" alt="pinterest logo">
+                        </a>
+                        <a href="{{ instagramLink }}" class="border border-border shadow-md rounded-md flex items-center justify-center bg-[#db4185] aspect-2 group">
+                            <img class="w-20 h-20 group-hover:scale-125 transition" src="{{ instagramSvg }}" alt="instagram logo">
+                        </a>
+                        <a href="{{ tumblrLink }}" class="border border-border shadow-md rounded-md flex items-center justify-center bg-[#314358] aspect-2 group">
+                            <img class="w-20 h-20 group-hover:scale-125 transition" src="{{ tumblrSvg }}" alt="tumblr logo">
+                        </a>
+                        <a href="{{ threadsLink }}" class="border border-border shadow-md rounded-md flex items-center justify-center bg-white aspect-2 group">
+                            <img class="w-20 h-20 group-hover:scale-125 transition" src="{{ threadsSvg }}" alt="threads logo">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="border border-border rounded-md p-4 md:p-8 space-y-4 flex flex-col justify-between">
+                    <h3 class="text-xl md:text-2xl lg:text-4xl">
+                        Explore a curated collection of breathtaking <a href="/search?q=danger"><strong class="text-muted-foreground">4K wallpapers</strong></a>, perfectly designed to <strong class="text-muted-foreground">Enhance the look of your desktop and mobile devices</strong> with vibrant, <strong class="text-muted-foreground">High-quality</strong> visuals.
+                    </h3>
+                </div>
+            </div>
+            {# <div class="w-full">
+                <div class="w-full border border-border rounded-md p-4 md:p-8">
+                    <div class="flex flex-col gap-2">
+                        <strong class="font-medium text-xl mb-4 text-muted-foreground">Join our mailing list for weekly wallpapers</strong>
+                        <div class="flex gap-2 flex-col md:flex-row">
+                            <input type="text" placeholder="Enter your email">
+                            {% 
+                                include './ui/Button.twig' with 
+                                {
+                                    primaryBtn: false,
+                                    btnId: "newsletter-subscription",
+                                    btnText: "Join the list",
+                                    icon: true,
+                                    iconUrl: email
+                                }
+                            %}
+                        </div>
+                    </div>
+                </div>
+            </div> #}
+        </div>
+    </div>
+</div>

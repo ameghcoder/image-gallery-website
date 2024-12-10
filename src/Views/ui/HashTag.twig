@@ -1,0 +1,11 @@
+<ul class='flex flex-wrap px-2 py-4 gap-2 list-none'>
+    {% for tag in tags %}
+        <li>
+            <a href={{ tag.url }} class='hashtag border border-border px-4 py-1 rounded-full bg-background'>
+                <code class="relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                    {{ tag.text }}
+                </code>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

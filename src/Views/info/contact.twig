@@ -1,0 +1,67 @@
+{% extends './info/layout.twig' %}
+
+{% block title %}
+   Contact us | Gloztik.com
+{% endblock %}
+
+{% block content %}
+    <div class="w-full p-2 md:p-4 lg:p-8 min-h-screen">
+        <div class="w-full max-w-2xl mx-auto">
+            <h2>Contact Us</h2>
+            <section class="text-container">
+            <p class="text-center">
+                If you want anything that goes wrong. 
+                <br>
+                Please contact us and provide complete details, what you want.
+            </p>
+            <form id="form_Box" style="width: 100%; max-width: 600px; margin: 20px auto; padding: 10px 20px;"
+                class="border border-border rounded-lg bg-card shadow-lg">
+                <h2 style="text-align: center;margin: 10px 0px;">Contact Form (Fill this form for contact us)</h2>
+                <p id="resp_print"></p>
+                <div class="input-groups" style="margin: 10px 0px">
+                    <label for="your-mail">Email* (please provide your E-mail address, so we can contact you)</label>
+                    <input
+                        class="rounded-lg"
+                        type="email" id="your-mail" placeholder="Enter your E-mail ...">
+                </div>
+                <div class="input-groups" style="margin: 10px 0px">
+                    <label for="your-name">Your Name*</label>
+                    <input
+                        class="rounded-lg"
+                        type="email" id="your-name" placeholder="Enter your name ...">
+                </div>
+                <div class="input-groups" style="margin: 10px 0px;">
+                    <label for="your-subject">Select Message Subject</label>
+                    <select name="your-subject" id="your-subject" class="rounded-lg">
+                        <option value="wallpaper issue">Wallpaper Issue</option>
+                        <option value="downloading issue">Downloading Issue</option>
+                        <option value="message to developer">Message to Developer</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="input-groups" style="margin:10px 0px;">
+                    <label for="your-country">Choose Country</label>
+                    <input name="your-country" class="rounded-lg" id="your-country" list="countries" placeholder="Choose your country">
+                    {% include './components/countryList.twig' %}
+                </div>
+                <div class="input-groups" style="margin: 10px 0px">
+                    <label for="your-message">Your Message* (provide your message, if you have problem with any
+                        wallpaper provide that wallpaper link here)</label>
+                    <textarea
+                        class="rounded-lg"
+                        id="your-message" cols="30" rows="10" placeholder="Enter your Message ..."></textarea>
+                </div>
+                <span class="text-sm"><strong class="text-sm">Note: </strong> We doesn't share your information to
+                    anyone.</span>
+                <br>
+                <button
+                    class="w-full bg-primary rounded-lg border border-border flex items-center justify-center text-foreground hover:scale-95 transition"
+                    style="padding: 10px 5px" type="button" id="sendMessageBtn">Send</button>
+            </form>
+            <div style="width: 100%; max-width: 600px; margin: 20px auto; padding 10px 20px;" id="final_msg"></div>
+
+        </section>
+        </div>
+    </div>
+    <script src="/public/assets/js/contact_us.js"></script>
+{% endblock %}

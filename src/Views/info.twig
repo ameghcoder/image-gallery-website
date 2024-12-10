@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="author" content="Dinesh Chashmaghar" />
+
+    <meta name="title" content="{{ TITLE }}" />
+    <meta name="description" content="{{ DESCRIPTION }}" />
+    <meta property="og:title" content="{{ TITLE }}" />
+    <link rel="canonical" href="{{ URL }}" />
+
+    <meta property="og:description" content="{{ DESCRIPTION }}" />
+    <meta property="og:image" content="{{ IMG_URL }}" />
+    <meta property="og:url" content="{{ URL }}" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ TITLE }}" />
+    <meta name="twitter:description" content="{{ DESCRIPTION }}" />
+    <meta name="twitter:image" content="{{ IMG_URL }}" />
+    {{
+      SCHEMA
+    }}
+    {{
+      css | raw
+    }}
+    <title>{{ TITLE }}</title>
+  </head>
+  <body data-theme="light">
+    <div class="root-container">
+      {{ header | raw }}
+      <div class="mt-8 w-full max-w-lg-custom mx-auto h-auto min-h-[50vh]">
+        <div class="p-2 md:p-4 border-b border-dc_border_clr border-dashed">
+          <h1 class="text-2xl font-bold">{{ HEADING }}</h1>
+        </div>
+        <div class="p-2 md:p-4 text-base font-medium">
+          {{ ROOT | raw }}
+        </div>
+      </div>
+      {{ footer | raw }}
+    </div>
+    {{ js | raw }}
+  </body>
+</html>

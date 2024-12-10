@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="robots" content="index, follow">
+    
+    <meta name="csrf-token" content="{{ csrfToken }}" />
+
+    <!-- pwa tags -->
+    <link rel="icon" type="image/png" href="/pwa/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/pwa/favicon.svg" />
+    <link rel="shortcut icon" href="/pwa/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/pwa/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Gloztik" />
+    <link rel="manifest" href="/pwa/site.webmanifest" />
+    
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <!-- base styling -->
+    <link rel="stylesheet" href="/public/assets/css/compressed/main-style.css?version=1.0.0">
+    {# Base Script #}
+    <script type="text/javascript" src="/public/assets/js/compressed/baseScriptSmall.js?version=1.0.0"></script>
+    
+    <title>
+        {% block title %}
+        <!-- Title goes here -->
+        {% endblock %}
+    </title>
+</head>
+
+<body class="relative">
+    <div class="root-container">
+        {% if homeHeader is defined %}
+            {% include './components/homeHeader.twig' %} <!-- Header -->
+        {% else %}
+            {% include './components/header.twig' %} <!-- Header -->
+        {% endif %}    
+        
+        {% block content %}
+            <!-- Default content goes here -->
+        {% endblock %}
+
+        {% include './components/footer.twig' %} <!-- Footer -->
+    </div>
+
+    {% include './components/scripts.twig' %}
+</body>
+
+</html>

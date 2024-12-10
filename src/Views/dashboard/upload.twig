@@ -1,0 +1,34 @@
+{% extends './dashboard/dashboardLayout.twig' %}
+
+
+{% block title %}
+    Overview | Upload
+{% endblock %}
+
+{% block dashboardContent %}
+    
+    <div class="w-full">
+        <div class="w-full max-w-xl mx-auto border border-border shadow-xl">
+            <div class="p-2 md:p-4 lg:p-8">
+                <div class="flex flex-col gap-4">
+                    <strong>Upload Wallpaper</strong>
+                    <div class="w-full overflow-hidden border border-border rounded-lg">
+                        <img id="wallpaper-preview" class="w-full object-cover" src="/public/assets/img/images/hero-section-bg.webp" alt="category">
+                        <input type="file" name="wallpaper-upload" id="wallpaper-upload" accept=".png, .jpg, .jpeg">
+                    </div>
+                    <div>
+                        <strong>length: <span id="title-length" class="font-mono">00</span></strong>
+                        <input placeholder="Wallpaper Title" type="text" class="rounded-lg" name="wallpaper-title" id="wallpaper-title">
+                    </div>
+                    <div>
+                        <strong>length: <span id="description-length" class="font-mono">00</span></strong>
+                        <textarea class="rounded-lg" name="wallpaper-description" id="wallpaper-description" placeholder="Enter Tags (Separated by commas like gta 6, gaming, full hd, 4k wallpaper, gamer wallpaper) not more than 120" rows="5"></textarea>
+                    </div>
+                    <button id="save-wallpaper" class="bg-primary p-2 md:p-4 font-semibold rounded-lg" type="upload">Upload Wallpaper</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/assets/js/dashboard_upload.js"></script>
+
+{% endblock %}

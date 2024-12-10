@@ -1,0 +1,35 @@
+<div class="navigation fixed left-1/2 -translate-x-1/2 w-full max-w-4xl my-0 md:my-4 lg:my-8" style="z-index: 100;">
+    <div>
+        <div class="px-4 py-2 bg-background/75 backdrop-blur-2xl rounded-none md:rounded-2xl border-border md:border shadow-lg">
+            <div class="flex items-center justify-between">
+                <a href="/">
+                    <img class="w-16 h-16 animate-spin animate-duration-5000" src="{{ logoWithoutText }}" alt="website official logo">
+                </a>
+                <div>
+                    {% include './ui/Navigation.twig' %}
+                </div>
+            </div>
+            <div class="overflow-hidden h-0 transition-all" data-open="false" id="search-box-container">
+                <form class="px-4 py-2 w-full border-t border-border" action="/search" method="get">
+                    <div class="flex gap-2">
+                        <input type="search" id="inputSearchTag" class="rounded-lg" name="q" placeholder="Search">
+                        {% 
+                            include './ui/Button.twig' with 
+                            {
+                                primaryBtn: true,
+                                btnText: "Search",
+                                style: "rounded-lg hover:translate-y-0",
+                                type: "submit"
+                            }
+                        %}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div></div>
+    </div>
+</div>
+<!-- Gap between header and main content -->
+<div class="h-20 md:h-28 lg:h-36"></div>
+
+<script src="/public/assets/js/header.js"></script>

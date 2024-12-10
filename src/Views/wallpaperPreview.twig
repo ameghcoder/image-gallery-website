@@ -1,0 +1,279 @@
+{% extends './layout.twig' %}
+
+{% block title %}
+    {{ wallpaper.title }}
+{% endblock %}
+
+{% block content %}
+    <!-- Wallpaper Preview Container -->
+    <div class="w-full min-h-screen border-t border-border p-2 sm:p-4 md:p-8 ">
+        <div class="w-full h-full relative">
+            <div class="w-full h-full flex flex-col md:flex-row gap-4">
+                <div class="w-full max-h-none md:max-w-[600px] bg-card rounded-lg pt-10 h-auto md:h-screen overflow-y-auto col-span-2 p-4 md:p-8 relative md:sticky top-0" itemprop="primaryImageOfPage" itemscope="" itemtype="http://schema.org/ImageObject">
+                  <meta itemprop="representativeOfPage" content="true">
+                  <meta itemprop="fileFormat" content="image/jpeg">
+                  <meta itemprop="description" content="{{ wallpaper.description }}">
+                  <meta itemprop="contentSize" content="{{ wallpaper.size }}">
+                    <div class="flex flex-col gap-4 relative">
+                        {% if wallpaper.device == "c" %}
+                          <img 
+                            style="aspect-ratio: {{ wallpaper.resolution|replace({',': '/'}) }}" 
+                            class="border border-border rounded-2xl w-full shadow-lg mx-auto object-cover relative z-50" 
+                            src="https://gloztik.com/public/image/webp/500/{{ wallpaper.filename }}.webp" 
+                            srcset="https://gloztik.com/public/image/webp/500/{{ wallpaper.filename }}.webp 1000w, https://gloztik.com/public/image/webp/1000/{{ wallpaper.filename }}.webp 1500w"
+                            sizes="(max-width: 1000px) 1000px, 1500px"
+                            alt="{{ wallpaper.title }}" itemprop="contentUrl"
+                          >
+                        {% else %}
+                          <img 
+                            style="aspect-ratio: {{ wallpaper.resolution|replace({',': '/'}) }}" 
+                            class="max-w-none md:max-w-sm border border-border rounded-2xl w-full shadow-lg mx-auto object-cover relative z-50" 
+                            src="https://gloztik.com/public/image/webp/500/{{ wallpaper.filename }}.webp"
+                            srcset="https://gloztik.com/public/image/webp/500/{{ wallpaper.filename }}.webp 1000w, https://gloztik.com/public/image/webp/1000/{{ wallpaper.filename }}.webp 1500w"
+                            sizes="(max-width: 1000px) 1000px, 1500px"
+                            alt="{{ wallpaper.title }}" itemprop="contentUrl"
+                          >
+                        {% endif %}
+                        <img 
+                          style="aspect-ratio: {{ wallpaper.resolution|replace({',': '/'}) }}" 
+                          class="max-w-none md:max-w-sm border border-border rounded-2xl w-full shadow-lg mx-auto object-cover absolute top-0 left-0 z-10 blur-2xl" 
+                          src="https://gloztik.com/public/image/webp/thumb/{{ wallpaper.filename }}.webp"
+                          alt="{{ wallpaper.title }}"
+                        >
+                        <div class="space-y-4">
+                            <h1 class="text-lg md:text-2xl text-muted-foreground font-semibold" itemprop="caption">
+                                {{ wallpaper.title }}
+                            </h1>
+                            <p class="text-sm sr-only">
+                                {{ wallpaper.description }}
+                            </p>
+                            <p class="text-sm font-mono">
+                                {{ wallpaper.updated_at }}
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-1">
+                              {% 
+                                include './ui/DownloadButton.twig' with 
+                                {
+                                  btnName: "Download",
+                                  imgName: "high-quality-image",
+                                  href: "https://gloztik.com/public/image/jpeg/" ~ wallpaper.filename ~ ".jpeg",
+                                  btnStyle: "w-full py-2 lg:py-4 font-semibold md:text-lg rounded-md",
+                                  iconUrl: download
+                                }
+                              %}
+                              {% 
+                                include './ui/Button.twig' with 
+                                {
+                                  primaryBtn: false,
+                                  icon: true,
+                                  iconUrl: share,
+                                  btnId: "imageShareButton",
+                                  btnText: "Share",
+                                  style: "w-full py-2 lg:py-4 font-semibold md:text-lg rounded-md"
+                                }
+                              %}
+                            </div>
+                            <div class="w-full border border-border flex items-center justify-center p-2 md:p-4 lg:p-8 overflow-hidden">
+                              {# Ads by Google #}
+                              <!-- Wallpaper Preview Page -->
+                              <ins class="adsbygoogle"
+                                  style="display:block"
+                                  data-ad-client="ca-pub-2522440384764425"
+                                  data-ad-slot="7456486095"
+                                  data-ad-format="auto"
+                                  data-full-width-responsive="true"></ins>
+                              <script>
+                                  (adsbygoogle = window.adsbygoogle || []).push({});
+                              </script>
+                            </div>
+                            <div class="mt-4">
+                              <div class="space-y-2">
+                                <strong class="flex justify-between border-b border-border py-2">
+                                  <strong>Total Views</strong>
+                                  <span class="font-normal font-mono">
+                                    {{ wallpaper.views }}
+                                  </span>
+                                </strong>
+                                <strong class="flex justify-between border-b border-border py-2">
+                                  <strong>Downloads</strong>
+                                  <span class="font-normal font-mono">
+                                    {{ wallpaper.downloads }}
+                                  </span>
+                                </strong>
+                                <strong class="flex justify-between border-b border-border py-2">
+                                  <strong>Shares</strong>
+                                  <span class="font-normal font-mono">
+                                    {{ wallpaper.shares }}
+                                  </span>
+                                </strong>
+                                <strong class="flex justify-between border-b border-border py-2">
+                                  <strong>File Size</strong>
+                                  <span class="font-normal font-mono">
+                                    {{ wallpaper.size }}KB
+                                  </span>
+                                </strong>
+                                <strong class="flex justify-between border-b border-border py-2">
+                                  <strong>Resolution</strong>
+                                  <span class="font-normal font-mono">
+                                    {{ wallpaper.resolution|replace({',': ' x '}) }}
+                                  </span>
+                                </strong>
+                                <strong class="flex justify-between border-b border-border py-2">
+                                  <strong>Mime Type</strong>
+                                  <span class="font-normal font-mono">image/jpeg</span>
+                                </strong>
+                              </div>
+                            </div>
+                            {# <div>
+                              <details class="bg-secondary my-4 rounded-lg border border-border">
+                                <summary class="p-4 rounded-lg bg-background list-item">
+                                  Choose Different Resolution
+                                </summary>
+                                <div class="p-4">
+                                  <h2 class="my-4 text-muted-foreground font-medium text-lg"><strong>PC, Desktop (720p, 1080p, 2k, 4k)</strong></h2>
+                                  <ul class="flex gap-2 flex-wrap list-none">
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1366&amp;h=768&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1366×768</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1920&amp;h=1080&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1920×1080</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1440&amp;h=900&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1440×900</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1600&amp;h=900&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1600×900</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1280&amp;h=800&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1280×800</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1024&amp;h=768&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1024×768</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1280&amp;h=1024&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1280×1024</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1536&amp;h=864&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1536×864</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1680&amp;h=1050&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1680×1050</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1360&amp;h=768&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1360×768</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2560&amp;h=1440&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2560×1440</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1920&amp;h=1200&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1920×1200</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1280&amp;h=768&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1280×768</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=800&amp;h=600&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">800×600</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=3840&amp;h=2160&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">3840×2160</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=4096&amp;h=2304&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">4096×2304</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=5120&amp;h=2880&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">5120×2880</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2880&amp;h=1800&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2880×1800</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2560&amp;h=1600&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2560×1600</a></li>
+                                  </ul>
+                                  <h2 class="my-4 text-muted-foreground font-medium text-lg"><strong>Mobile (iPhone, Android)</strong></h2>
+                                  <ul class="flex gap-2 flex-wrap list-none">
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=320&amp;h=480&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">320×480</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=640&amp;h=960&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">640×960</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=640&amp;h=1136&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">640×1136</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=750&amp;h=1334&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">750×1334</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1242&amp;h=2208&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1242×2208</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1125&amp;h=2436&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1125×2436</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1242&amp;h=2688&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1242×2688</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=828&amp;h=1792&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">828×1792</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=720&amp;h=1280&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">720×1280</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1080&amp;h=1920&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1080×1920</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=480&amp;h=854&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">480×854</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=480&amp;h=800&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">480×800</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=540&amp;h=960&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">540×960</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=600&amp;h=1024&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">600×1024</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=800&amp;h=1280&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">800×1280</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1440&amp;h=2560&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1440×2560</a></li>
+                                  </ul>
+                                  <h2 class="my-4 text-muted-foreground font-medium text-lg"><strong>Tablet (iPad, Android)</strong></h2>
+                                  <ul class="flex gap-2 flex-wrap list-none">
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1024&amp;h=768&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1024×768</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2048&amp;h=1536&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2048×1536</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2224&amp;h=1668&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2224×1668</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2388&amp;h=1668&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2388×1668</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2732&amp;h=2048&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2732×2048</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2736&amp;h=1824&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2736×1824</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2048&amp;h=1536&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2048×1536</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1024&amp;h=600&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1024×600</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=1600&amp;h=1200&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">1600×1200</a></li>
+                                      <li><a href="/api/misc_get_api?type=reso&amp;w=2160&amp;h=1440&amp;url=Cute-girl-with-dog-anime-4k-desktop-wallpaper-heavy-cloud15-May-2024-09-04-17-PM" target="_blank" class="diff_reso_link p-2 border flex border-q_br_clr rounded-lg transition-all hover:scale-95">2160×1440</a></li>
+                                  </ul>
+                                </div>
+                              </details>
+                            </div> #}
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full h-full">
+                    <div class="wallpaper-container">
+                        <div class="w-full border border-border flex items-center justify-center p-2 md:p-4 lg:p-8 overflow-hidden">
+                          {# Ads by Google #}
+                          <!-- Wallpaper Preview Page -->
+                          <ins class="adsbygoogle"
+                              style="display:block"
+                              data-ad-client="ca-pub-2522440384764425"
+                              data-ad-slot="7456486095"
+                              data-ad-format="auto"
+                              data-full-width-responsive="true"></ins>
+                          <script>
+                              (adsbygoogle = window.adsbygoogle || []).push({});
+                          </script>
+                        </div>
+                        <div class="flex flex-col gap-4 items-start">
+                            <strong class="text-lg md:text-2xl lg:text-4xl text-muted-foreground">
+                                Related Wallpapers
+                            </strong>
+                            {% if wallpapers is empty %}
+                                  <div class="w-full flex items-center justify-center flex-col">
+                                    <strong>No More Wallpapers</strong>
+                                    <strong class="inline-flex flex-wrap gap-4">
+                                        <span>Try these </span>
+                                        <a href="/search?q=krishna">Krishna</a>
+                                        <a href="/search?q=anime">Anime</a>
+                                        <a href="/search?q=girl">Girl</a>
+                                        <a href="/search?q=car">Car</a>
+                                        <a href="/search?q=danger">Danger</a>
+                                        <a href="/search?q=boy">Boy</a>
+                                    </strong>
+                                  </div>
+                            {% else %}
+                              <div class="columns-2 sm:columns-3 md:columns-2 2xl:columns-3 gap-2 md:gap-4">
+                                {% include './ui/WallpaperCard.twig' with wallpapers %}
+                              </div>
+                            {% endif %}
+                            <div class="w-full border border-border flex items-center justify-center p-2 md:p-4 lg:p-8 overflow-hidden">
+                              {# Ads by Google #}
+                              <!-- Wallpaper Preview Page -->
+                              <ins class="adsbygoogle"
+                                  style="display:block"
+                                  data-ad-client="ca-pub-2522440384764425"
+                                  data-ad-slot="7456486095"
+                                  data-ad-format="auto"
+                                  data-full-width-responsive="true"></ins>
+                              <script>
+                                  (adsbygoogle = window.adsbygoogle || []).push({});
+                              </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-col gap-4 p-2 md:p-4 items-center justify-center">
+                      {% include './ui/Pagination.twig' %}
+                    </div>
+                </div>
+            </div>
+            <!-- additional pop ups -->
+            <div>
+
+            </div>
+        </div>
+    </div>
+
+      <script type="text/javascript">
+        // Share Web API function
+        const shareButton = document.getElementById('imageShareButton');
+        
+        shareButton.addEventListener('click', async () => {
+          const currentUrl = window.location.href;
+          if (navigator.share) { // Check if the Web Share API is supported
+            try {
+              await navigator.share({
+                title: "{{ wallpaper.title }}",
+                text: "I found this amazing website! For downloading 4k wallpapers for Android, iPhone and Desktop.",
+                url: currentUrl, // Replace with your URL
+              });
+              console.log('Content shared successfully!');
+            } catch (error) {
+              console.error(`Error sharing: ${error}`);
+            }
+          } else {
+            console.info('Web Share API not supported in your browser.');
+          }
+        });
+      </script>
+{% endblock %}

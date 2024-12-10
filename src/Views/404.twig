@@ -1,0 +1,26 @@
+{% extends './layout.twig' %}
+
+{% block title %}
+    404 - Page Not Found - You Lost
+{% endblock %}
+
+{% block content %}
+    <section class="w-full h-full bg-dc_bg_clr flex items-center justify-center">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+            <div class="mx-auto max-w-screen-sm text-center">
+                <h1 class="mb-4 tracking-tight font-extrabold text-dc_heading_text_clr">
+                    404</h1>
+                <p class="mb-4 text-3xl tracking-tight font-bold md:text-4xl text-dc_body_text_clr">Something's
+                    missing.</p>
+                <p class="mb-4 text-lg font-light text-dc_body_text_clr">Sorry, we can't find that page. You'll
+                    find lots to explore on the home page. </p>
+                <a href="javascript:history.go(-1)"
+                    class="inline-flex text-dc_onPrimary_clr bg-dc_primary_clr focus:ring-4 focus:outline-none focus:ring-dc_secondary_1_clr font-medium rounded-lg text-sm px-4 py-2 text-center my-4">Go
+                    Back</a>
+                <a href="/"
+                    class="bg-dc_secondary_1_clr border border-dc_border_clr inline-flex text-dc_onPrimary_clr focus:ring-4 focus:outline-none focus:ring-dc_secondary_1_clr font-medium rounded-lg text-sm px-4 py-2 text-center my-4">Go
+                    to Homepage</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

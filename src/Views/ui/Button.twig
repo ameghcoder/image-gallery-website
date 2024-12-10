@@ -1,0 +1,15 @@
+    {% if primaryBtn == true %}
+        <button type="{{ type }}" onclick="{{ onClickAction }}" id="{{ btnId }}" class="btn bg-primary inline-flex gap-2 items-center {{ style }}">
+            {% if icon == true %}
+                <img class="w-6 h-6 invert" src="{{ iconUrl }}" alt="icon" />
+            {% endif %}
+            {{ btnText }}
+        </button>
+    {% else %}
+        <button type="{{ type }}" onclick="{{ onClickAction }}" id="{{ btnId }}" class="btn bg-secondary inline-flex gap-2 items-center {{ style }}">
+            {% if icon == true %}
+                <img class="w-6 h-6 invert" src="{{ iconUrl }}" alt="icon" />
+            {% endif %}
+            {{ btnText }}
+        </button>
+    {% endif %}

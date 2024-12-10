@@ -1,0 +1,56 @@
+{% extends './layout.twig' %}
+
+{% block title %}
+    Verify Your Email
+{% endblock %}
+
+{% block content %}
+<section class="bg-dc_bg_clr">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto my-8 lg:py-0">
+      <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-dc_heading_text_clr">
+          <img class="w-8 h-8 mr-2" src="{{websiteLogoWithoutText}}" alt="logo">
+          DCEYEWR    
+      </a>
+      <div class="w-full rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 bg-dc_surface_clr border border-dc_border_clr">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <div>
+                <h1 class="text-xl text-center font-bold leading-tight tracking-tight text-dc_body_text_clr md:text-2xl">
+                    Email Verification
+                </h1>
+                <p class="text-sm text-center font-medium text-dc_body_text_light_clr mt-0">
+                  We have sent a code to your email {{userEmail}}
+                </p>
+            </div>
+            <div>
+            <form>
+                <div class="flex flex-col space-y-8">
+                    <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                        <input type="text" name="otp_code" id="otp_code" class="w-full h-full flex flex-col items-center justify-center text-center px-5 py-4 outline-none rounded-xl border border-dc_secondary_1_clr text-lg bg-dc_bg_clr focus:bg-dc_surface_clr focus:ring-1 ring-dc_primary_clr shadow-inner"
+                        placeholder="_ _ _ _ _ _"
+                        >
+                    </div>
+        
+                    <div class="flex flex-col space-y-5">
+                        <div>
+                            <button type="button" id="verify_user" class="w-full text-dc_onPrimary_clr bg-dc_primary_clr hover:bg-dc_primary_clr/75 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Verify Email</button>
+                        </div>
+            
+                        <div class="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
+                            <p>Didn't recieve code?</p> <button type="button" id="resend_email" class="flex flex-row items-center text-dc_link_clr">Resend</button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+          </div>
+      </div>
+  </div>
+</section>
+<script type="text/javascript">
+    const userEmail = "{{userEmail}}";
+    if(userEmail == undefined || userEmail == null){
+        window.location.href = "/login";
+    }
+</script>
+<script src="/public/assets/scripts/verify_email.js"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{# Categories Text #}
+<div class="bg-muted w-full h-auto min-h-40 py-4 md:py-8 lg:py-12 border-t border-b border-border my-4">
+    <div class="slider-wrapper">
+        <ul class="slider">
+            {% for category in categories %}
+                <li><a href="/category/{{ category.basename }}">{{ category.title }}</a></li>                
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="slider-wrapper">
+        <ul class="slider slider-reverse">
+            {% for category in categories %}
+                <li><a href="/category/{{ category.basename }}">{{ category.title }}</a></li>                
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- Custom Script for HomePage -->
+<script type="text/javascript">
+    const slider = $(".slider");
+
+    // clone the list items for seamless infinite scroll
+    slider.innerHTML += slider.innerHTML;
+</script>

@@ -1,0 +1,56 @@
+{
+    "abstract-wallpapers": {
+        "title": "Abstract",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "abstract",
+        "basename": "abstract-wallpapers"
+    },
+    "animals-wallpapers": {
+        "title": "Animals",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "animal",
+        "basename": "animals-wallpapers"
+    },
+    "anime-wallpapers": {
+        "title": "Anime",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "anime",
+        "basename": "anime-wallpapers"
+    },
+    "cars-wallpapers": {
+        "title": "Cars",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "car",
+        "basename": "cars-wallpapers"
+    },
+    "flowers-wallpapers": {
+        "title": "Flowers",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "flower",
+        "basename": "flowers-wallpapers"
+    },
+    "gaming-wallpapers": {
+        "title": "Gaming",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "gaming",
+        "basename": "gaming-wallpapers"
+    },
+    "girl-wallpapers": {
+        "title": "Girl",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "girl",
+        "basename": "girl-wallpapers"
+    },
+    "god-wallpapers": {
+        "title": "Gods",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "god, lord",
+        "basename": "god-wallpapers"
+    },
+    "nature-wallpapers": {
+        "title": "Nature",
+        "img": "/public/assets/img/images/category-skeleton.webp",
+        "query": "nature",
+        "basename": "nature-wallpapers"
+    }
+}
