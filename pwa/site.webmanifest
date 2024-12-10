@@ -2,7 +2,7 @@
   "name": "Art for Every Pixel",
   "short_name": "Gloztik",
   "description": "Eyecatching wallpapers only for Mobile and PC",
-  "start_url": "/",
+   "start_url": "https://gloztik.com",
   "icons": [
     {
       "src": "/pwa/web-app-manifest-192x192.png",

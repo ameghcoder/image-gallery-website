@@ -67,7 +67,7 @@ class Wallpaper{
 
             $imageUploader = new ImageUploader($slug, $tempName, $extension, $width, $height);
             if($imageUploader->uploadWebp() && $imageUploader->uploadJpeg()){
-                $size = filesize(__DIR__ . "/../../public/image/jpeg" . $slug . ".jpeg");
+                $size = filesize(__DIR__ . "/../../public/image/jpeg/" . $slug . ".jpeg");
 
                 $query3 = "UPDATE wallpapers SET filename = :filename, size = :size WHERE id = :id";
                 $stmt3 = $conn->prepare($query3);
