@@ -72,7 +72,7 @@ const uploadInit = () => {
 
             fetchDataVersion2(`/api/upload`, "POST", form)
             .then(response => {
-                e.target.innerHTML = "Sign in";
+                e.target.innerHTML = "Upload Wallpaper";
                 e.target.removeAttribute("disabled");
 
                 if(isValidJsonData(response)){
@@ -80,6 +80,9 @@ const uploadInit = () => {
                         Toast.Error(response["message"]);
                     } else if(response["type"] == "success"){
                         Toast.Success(response["message"]);
+                        // reset all values
+                        title.value = description.value = wallData = "";
+                        wallpaperPreview.setAttribute("src", wallpaperPreview.getAttribute("data-src"));
                     } else{
                         throw new Error("Something went wrong");
                     }
