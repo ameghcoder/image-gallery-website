@@ -58,71 +58,91 @@ class Wallpaper{
     }
 
     public static function save($data){
-        // Wallpaper Data
-        $tempName = $data['wallpaperName']['tmp_name'];
-        $type = $data['wallpaperName']['type'];
-        $id = $data['id'];
+        $conn = self::dbConnection();     
+        try{
+            // Wallpaper Data
+            $tempName = $data['wallpaperName']['tmp_name'];
+            $type = $data['wallpaperName']['type'];
+            $id = $data['id'];
 
-        list($width, $height) = getimagesize($tempName);
+            list($width, $height) = getimagesize($tempName);
 
-        // Additional Information to save in database
-        $resolution = "$width,$height";
-        $device = $width >= $height ? "c" : "a";
+            // Additional Information to save in database
+            $resolution = "$width,$height";
+            $device = $width >= $height ? "c" : "a";
 
-        $extension = explode('/', $type);
-        $extension = $extension == 'jpg' || $extension == 'jfif' ? 'jpeg' : $extension;
+            $extension = explode('/', $type);
+            $extension = $extension == 'jpg' || $extension == 'jfif' ? 'jpeg' : $extension;
 
-        $title = $data['title'];
-        $description = self::createDynamicDescription($data['description'], $resolution);
+            if($extension === "png"){
+                JsonResponse::send(
+                    "We support only JPEG image at this time, this image is PNG",
+                    "error"
+                );
+            }
 
-        $conn = self::dbConnection();        
+            $title = $data['title'];
+            $description = self::createDynamicDescription($data['description'], $resolution);
 
-        $views = $downloads = $shares = 0;
-        
-        $query = "INSERT INTO 
-                    wallpapers(title, description, filename, views, downloads, shares, device, resolution, userId) 
-                    VALUES (:title, :description, '', :views, :downloads, :shares, :device, :resolution, :userId)";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":description", $description);
-        $stmt->bindParam(":views", $views);
-        $stmt->bindParam(":downloads", $downloads);
-        $stmt->bindParam(":shares", $shares);
-        $stmt->bindParam(":device", $device);
-        $stmt->bindParam(":resolution", $resolution);
-        $stmt->bindParam(":userId", $id);
+            $views = $downloads = $shares = 0;
 
-        if($stmt->execute()){
-            $lastId = $conn->lastInsertId();
+            $query = "INSERT INTO 
+                        wallpapers(title, description, filename, views, downloads, shares, device, resolution, userId) 
+                        VALUES (:title, :description, '', :views, :downloads, :shares, :device, :resolution, :userId)";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(":title", $title);
+            $stmt->bindParam(":description", $description);
+            $stmt->bindParam(":views", $views);
+            $stmt->bindParam(":downloads", $downloads);
+            $stmt->bindParam(":shares", $shares);
+            $stmt->bindParam(":device", $device);
+            $stmt->bindParam(":resolution", $resolution);
+            $stmt->bindParam(":userId", $id);
+            $lastId = "";
+            if($stmt->execute()){
+                $lastId = $conn->lastInsertId();
 
-            $slug = self::createSlug($title, $lastId);
+                $slug = self::createSlug($title, $lastId);
 
-            $imageUploader = new ImageUploader($slug, $tempName, $extension, $width, $height);
-            if($imageUploader->uploadWebp() && $imageUploader->uploadJpeg()){
-                $size = filesize(__DIR__ . "/../../public/image/jpeg/" . $slug . ".jpeg");
+                $imageUploader = new ImageUploader($slug, $tempName, $extension, $width, $height);
+                if($imageUploader->uploadWebp() && $imageUploader->uploadJpeg()){
+                    $size = filesize(__DIR__ . "/../../public/image/jpeg/" . $slug . ".jpeg");
 
-                $query3 = "UPDATE wallpapers SET filename = :filename, size = :size WHERE id = :id";
-                $stmt3 = $conn->prepare($query3);
+                    $query3 = "UPDATE wallpapers SET filename = :filename, size = :size WHERE id = :id";
+                    $stmt3 = $conn->prepare($query3);
 
-                $stmt3->bindParam(":filename", $slug);
-                $stmt3->bindParam(":size", $size);
-                $stmt3->bindParam(":id", $lastId);
+                    $stmt3->bindParam(":filename", $slug);
+                    $stmt3->bindParam(":size", $size);
+                    $stmt3->bindParam(":id", $lastId);
 
-                if($stmt3->execute()){
-                    return [
-                        "code" => "001",
-                        "func" => "Universal",
-                        "type" => "success",
-                        "data" => [
-                            "url" => "https://gloztik.com/wallpaper/$slug"
-                        ]
-                    ];
+                    if($stmt3->execute()){
+                        return [
+                            "code" => "001",
+                            "func" => "Universal",
+                            "type" => "success",
+                            "data" => [
+                                "url" => "https://gloztik.com/wallpaper/$slug"
+                            ]
+                        ];
+                    } else{
+                        $query2 = "DELETE FROM wallpapers WHERE id=:id";
+                        $stmt2 = $conn->prepare($query2);
+                        $stmt2->bindParam(":id", $lastId);
+                        $stmt2->execute();
+
+                        JsonResponse::send(
+                            "Something goes wrong when create the image, Changes rollbacked",
+                            "error"
+                        );
+                    }
+
                 } else{
+                    // rollback data
                     $query2 = "DELETE FROM wallpapers WHERE id=:id";
                     $stmt2 = $conn->prepare($query2);
                     $stmt2->bindParam(":id", $lastId);
                     $stmt2->execute();
-    
+
                     JsonResponse::send(
                         "Something goes wrong when create the image, Changes rollbacked",
                         "error"
@@ -130,27 +150,27 @@ class Wallpaper{
                 }
 
             } else{
-                // rollback data
-                $query2 = "DELETE FROM wallpapers WHERE id=:id";
-                $stmt2 = $conn->prepare($query2);
-                $stmt2->bindParam(":id", $lastId);
-                $stmt2->execute();
-
-                JsonResponse::send(
-                    "Something goes wrong when create the image, Changes rollbacked",
-                    "error"
-                );
+                return [
+                    "code" => "001",
+                    "func" => "Universal",
+                    "type" => "error"
+                ];
             }
 
-        } else{
-            return [
-                "code" => "001",
-                "func" => "Universal",
-                "type" => "error"
-            ];
-        }
+            return true;
+        } catch(\Exception $e){
+            // rollback data
+            $query2 = "DELETE FROM wallpapers WHERE id=:id";
+            $stmt2 = $conn->prepare($query2);
+            $stmt2->bindParam(":id", $lastId);
+            $stmt2->execute();
 
-        return true;
+            JsonResponse::send(
+                "Something goes wrong when create the image, Changes rollbacked",
+                "error"
+            );
+        }
+        
     }
 
     public static function update(){
