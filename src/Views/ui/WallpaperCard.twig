@@ -5,7 +5,7 @@
         <link itemprop="contentUrl" href="{{ wallpaper.url }}">
         <a itemprop="url" href="/wallpaper/{{ wallpaper.filename }}" class="w-full">
           <img 
-            style="aspect-ratio: {{ wallpaper.resolution|replace({',': '/'}) }}; width: {{ wallpaper.resolution|split(',')[0] }}px" 
+            style="aspect-ratio: {{ wallpaper.resolution|replace({',': '/'}) }}; width: 500px" 
             {% if lazyload is defined %}
               class="w-full h-auto object-cover wallpaperCardLazyLoad animate-pulse" 
               src="https://gloztik.com/public/image/webp/200/{{ wallpaper.filename }}.webp" 
