@@ -79,7 +79,7 @@ class ImageUploader{
             if($blankImage){
                 if(imagecopyresized($blankImage, $sourceImage, 0, 0, 0, 0, $width, $height, $this->ORIGINALWidth, $this->ORIGINALHeight)){
                     imagedestroy($sourceImage);
-                    if(imagewebp($blankImage, $path)){
+                    if(imagewebp($blankImage, $path, 85)){
                         imagedestroy($blankImage);
                         return true;
                     } else{
