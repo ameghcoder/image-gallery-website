@@ -1,12 +1,21 @@
-<meta name="title" content="{{ TITLE }}">
-<meta name="description" content="{{ DESCRIPTION }}">
-<meta property="og:title" content="{{ TITLE }}" />
-<meta property="og:description" content="{{ DESCRIPTION }}" />
-<meta property="og:image" content="{{ IMG_URL }}" />
-<meta property="og:url" content="{{ URL }}" />
+<meta name="title" content="{{wallpaper.title}}">
+<meta name="description" content="{{wallpaper.description}}">
+<meta property="og:title" content="{{wallpaper.title}}" />
+<meta property="og:description" content="{{wallpaper.description}}" />
+
 <meta property="og:type" content="website" />
-<link rel="canonical" href="{{ URL }}" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="{{ TITLE }}" />
-<meta name="twitter:description" content="{{ DESCRIPTION }}" />
-<meta name="twitter:image" content="{{ IMG_URL }}" />
+<meta name="twitter:title" content="{{wallpaper.title}}" />
+<meta name="twitter:description" content="{{wallpaper.description}}" />
+
+{% if wallpaper.filename is defined %}
+    <meta property="og:image" content="https://gloztik.com/public/image/webp/1000/{{wallpaper.filename}}.webp" />
+    <meta property="og:url" content="https://gloztik.com/wallpaper/{{wallpaper.filename}}" />
+    <meta name="twitter:image" content="https://gloztik.com/public/image/webp/1000/{{wallpaper.filename}}.webp" />
+    <link rel="canonical" href="https://gloztik.com/wallpaper/{{wallpaper.filename}}" />
+{% else %}
+    <meta property="og:image" content="{{wallpaper.imgUrl}}" />
+    <meta property="og:url" content="{{wallpaper.url}}" />
+    <meta name="twitter:image" content="{{wallpaper.imgUrl}}" />
+    <link rel="canonical" href="{{wallpaper.url}}" />
+{% endif %}

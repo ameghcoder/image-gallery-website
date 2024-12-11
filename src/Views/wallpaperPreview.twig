@@ -4,6 +4,10 @@
     {{ wallpaper.title }}
 {% endblock %}
 
+{% block schema %}
+  {% include './components/schema.twig' %}
+{% endblock %}
+
 {% block content %}
     <!-- Wallpaper Preview Container -->
     <div class="w-full min-h-screen border-t border-border p-2 sm:p-4 md:p-8 ">

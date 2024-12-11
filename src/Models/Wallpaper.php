@@ -25,6 +25,38 @@ class Wallpaper{
         return $slug . '-' . $id;
     }
 
+    private static function createDynamicDescription($tag, $resolution){
+        $templates = [
+            "Download this {adjective} {tags} wallpaper in {resolution}. This ultra-HD image is perfect for {audience} and will bring your screen to life.",
+            "Experience this {adjective} with the beauty of {tags} with this ultra-HD wallpaper in {resolution}. Perfect for {audience}.",
+            "Get this high-quality {tags} wallpaper in {resolution}. This {adjective} image will bring energy and life to your screen."
+        ];
+
+        $audienceOptions = ['car lovers', 'anime lovers', 'racing fans', 'gamers', 'car enthusiasts'];
+        $adjectives = ['stunning', 'breathtaking', 'eye-catching', 'mind-blowing', 'captivating'];
+
+        $audience = $audienceOptions[array_rand($audienceOptions)];
+        $adjective = $adjectives[array_rand($adjectives)];
+
+        $descriptionTemplate = $templates[array_rand($templates)];
+        $descriptionTemplate = str_replace(
+            [
+                '{adjective}',
+                '{tags}',
+                '{resolution}',
+                '{audience}'
+            ],
+            [
+                $adjective,
+                $tag,
+                $resolution,
+                $audience
+            ],
+            $descriptionTemplate
+        );
+        return $descriptionTemplate;
+    }
+
     public static function save($data){
         // Wallpaper Data
         $tempName = $data['wallpaperName']['tmp_name'];
@@ -41,9 +73,9 @@ class Wallpaper{
         $extension = $extension == 'jpg' || $extension == 'jfif' ? 'jpeg' : $extension;
 
         $title = $data['title'];
-        $description = $data['description'];
+        $description = self::createDynamicDescription($data['description'], $resolution);
 
-        $conn = self::dbConnection();
+        $conn = self::dbConnection();        
 
         $views = $downloads = $shares = 0;
         

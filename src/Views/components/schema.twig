@@ -1,0 +1,43 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "@id": "https://gloztik.com/wallpaper/{{wallpaper.filename}}", 
+  "url": "https://gloztik.com/wallpaper/{{wallpaper.filename}}", 
+  "name": "{{wallpaper.title}}", 
+  "description": "Download this stunning [Wallpaper Name] for personal use on your PC, desktop, Android, or iPhone. High-resolution, personal-use wallpaper only.", 
+  "contentUrl": "https://gloztik.com/public/image/jpeg/{{wallpaper.filename}}.jpeg",
+  "thumbnailUrl": "https://gloztik.com/public/image/webp/500/{{wallpaper.filename}}.webp",
+  "uploadDate": "{{wallpaper.updated_at}}", 
+  "fileFormat": "image/jpeg", 
+  "author": {
+    "@type": "Organization",
+    "name": "Gloztik",
+    "url": "https://gloztik.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Gloztik",
+    "url": "https://gloztik.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://gloztik.com/public/assets/img/icons/gloztik-transparent-logo.png",
+      "width": 500,
+      "height": 500
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://gloztik.com/wallpaper/{{wallpaper.filename}}"
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://gloztik.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "usageInfo": {
+    "@type": "CreativeWork",
+    "copyrightNotice": "This wallpaper is for personal use only and may not be used for commercial purposes."
+  }
+}
+</script>

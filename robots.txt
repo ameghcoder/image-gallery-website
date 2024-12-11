@@ -1,0 +1,32 @@
+User-agent: *
+Disallow: 
+Disallow: /cgi-bin/
+Disallow: /dashboard/
+Sitemap: https://gloztik.com/sitemap.xml
+
+# Allow all web crawlers full access to important pages
+User-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /cgi-bin/
+Disallow: /db/
+Disallow: /logs/
+Disallow: /public/assets/js/
+Disallow: /vendor/
+Disallow: /src/
+
+# Block tracking parameters (utm_source, ref)
+Disallow: /*?utm_source=*
+Disallow: /*?ref=*
+
+# Explicitly allow access to the search page with parameters
+Allow: /search
+
+# Allow access to the main gallery and wallpaper pages
+Allow: /public/image/webp/1000/
+Allow: /wallpaper/
+
+
+# Sitemap location to help search engines crawl your site better
+Sitemap: https://www.gloztik.com/sitemap.xml

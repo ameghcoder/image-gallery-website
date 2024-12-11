@@ -103,7 +103,13 @@ $router->map('GET', '/', function() use ($twig, $images) {
         "categories" => $category,
         "wallpapers" => $recentWallpaper,
         "wallpaperCardPixel" => "500",
-        "homeHeader" => "true"
+        "homeHeader" => "true",
+        "wallpaper" => [
+            "title" => "Android, iPhone and 4k Desktop Wallpapers",
+            "description" => "Explore a stunning collection of high-quality wallpapers for PC, desktop, Android, and iPhone. Download and share your favorite wallpapers with ease!",
+            "imgUrl" => "https://gloztik.com/public/assets/img/images/desktop-wallpapers.jpg",
+            "url" => "https://gloztik.com"
+        ]
     ];
 
     echo $twig->render('home.twig', $templateData);
@@ -131,7 +137,13 @@ $router->map('GET', '/category/[**:category]?', function ($category = null) use 
                 "wallpapers" => "",
                 "query" => $query,
                 "wallpaperCardPixel" => "500",
-                "endpoint" => "search"
+                "endpoint" => "search",
+                "wallpaper" => [
+                    "title" => "$category | Search Wallpapers",
+                    "description" => "Explore a stunning collection of $category high-quality wallpapers for PC, desktop, Android, and iPhone.",
+                    "imgUrl" => "https://gloztik.com/public/assets/img/images/desktop-wallpapers.jpg",
+                    "url" => "https://gloztik.com/category/$category"
+                ]
             ];
 
             if(empty($searchedWallpapers)){
@@ -247,7 +259,13 @@ $router->map('GET', '/search', function() use ($twig, $images){
                 "wallpapers" => "",
                 "query" => $query,
                 "wallpaperCardPixel" => "500",
-                "endpoint" => "search"
+                "endpoint" => "search",
+                "wallpaper" => [
+                    "title" => "$query | Search Wallpapers",
+                    "description" => "Explore a stunning collection of $query high-quality wallpapers for PC, desktop, Android, and iPhone.",
+                    "imgUrl" => "https://gloztik.com/public/assets/img/images/desktop-wallpapers.jpg",
+                    "url" => "https://gloztik.com/search?q=$query"
+                ]
             ];
 
             if(empty($searchedWallpapers)){
@@ -276,7 +294,13 @@ $router->map('GET', '/android-wallpapers', function () use ($twig) {
         "wallpapers" => "",
         "query" => "Android Wallpapers",
         "wallpaperCardPixel" => "500",
-        "endpoint" => "mobWallpaper"
+        "endpoint" => "mobWallpaper",
+        "wallpaper" => [
+            "title" => "Android Wallpapers | Search Wallpapers",
+            "description" => "Explore a stunning collection of android high-quality wallpapers for PC, desktop, Android, and iPhone.",
+            "imgUrl" => "https://gloztik.com/public/assets/img/images/mobile-wallpapers.jpg",
+            "url" => "https://gloztik.com/android-wallpapers"
+        ]
     ];
 
     if(empty($searchedWallpapers)){
@@ -298,7 +322,13 @@ $router->map('GET', '/iphone-wallpapers', function () use ($twig) {
         "wallpapers" => "",
         "query" => "iPhone Wallpapers",
         "wallpaperCardPixel" => "500",
-        "endpoint" => "mobWallpaper"
+        "endpoint" => "mobWallpaper",
+        "wallpaper" => [
+            "title" => "iPhone Wallpapers | Search Wallpapers",
+            "description" => "Explore a stunning collection of iphone high-quality wallpapers for PC, desktop, Android, and iPhone.",
+            "imgUrl" => "https://gloztik.com/public/assets/img/images/mobile-wallpapers.jpg",
+            "url" => "https://gloztik.com/iphone-wallpapers"
+        ]
     ];
 
     if(empty($searchedWallpapers)){
@@ -322,7 +352,13 @@ $router->map('GET', '/desktop-wallpapers', function() use ($twig){
         "wallpaperCardPixel" => "500",
         "endpoint" => "desktopWallpaper",
         "nextPage" => 3,
-        "maxWidth" => 500
+        "maxWidth" => 500,
+        "wallpaper" => [
+            "title" => "4k Desktop Wallpapers | Search Wallpapers",
+            "description" => "Explore a stunning collection of iphone high-quality wallpapers for PC, desktop, Android, and iPhone.",
+            "imgUrl" => "https://gloztik.com/public/assets/img/images/desktop-wallpapers.jpg",
+            "url" => "https://gloztik.com/desktop-wallpapers"
+        ]
     ];
 
     if(empty($searchedWallpapers)){
@@ -388,7 +424,14 @@ $router->map('GET', '/page/[**:pageName]?', function($pageName = null) use ($twi
     if($pageName == null){
         notFoundPage($twig);
     } else{
-        $templateData = [];
+        $templateData = [
+            "wallpaper" => [
+                "title" => $pageName,
+                "description" => "Discover more about $pageName — your go-to destination for high-quality, personal-use wallpapers for PC, desktop, Android, and iPhone. Learn about our mission, values, and the inspiration behind our collection.",
+                "imgUrl" => "https://gloztik.com/public/assets/img/images/mobile-wallpapers.jpg",
+                "url" => "https://gloztik.com/page/$pageName"
+            ]
+        ];
 
         if($pageName == "about"){
             echo $twig->render("./info/about.twig");
