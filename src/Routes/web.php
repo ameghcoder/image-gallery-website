@@ -446,3 +446,25 @@ $router->map('GET', '/page/[**:pageName]?', function($pageName = null) use ($twi
         }
     }
 });
+
+// other important routes
+$router->map('GET', '/sitemap.xml', function(){
+    // output file
+    readfile(__DIR__ . '/../../sitemap.xml');
+});
+$router->map('GET', '/ads.txt', function(){
+    // output file
+    readfile(__DIR__ . '/../../ads.txt');
+});
+$router->map('GET', '/bc648d883815416b882d0bb5a9cecf76.txt', function(){
+    // output file
+    readfile(__DIR__ . '/../../bc648d883815416b882d0bb5a9cecf76.txt');
+});
+$router->map('GET', '/yandex_e72c28597d24ab3c.html', function(){
+    // output file
+    readfile(__DIR__ . '/../../yandex_e72c28597d24ab3c.html');
+});
+$router->map('GET', '/robots.txt', function(){
+    // output file
+    readfile(__DIR__ . '/../../robots.txt');
+});
