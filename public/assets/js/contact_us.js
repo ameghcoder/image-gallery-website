@@ -83,7 +83,28 @@ const contactUsInit = () => {
                 Toast.Error(err.message);
             })
         } else{
-            Toast.Error("Email or Password Invalid");
+            let message = "";
+            switch (false) {
+                case validatedValues.name[1]:
+                    message = "Name is invalid";
+                    break;
+                case validatedValues.email[1]:
+                    message = "Email is invalid";
+                    break;
+                case validatedValues.country[1]:
+                    message = "Country is invalid";
+                    break;
+                case validatedValues.subject[1]:
+                    message = "Subject is invalid";
+                    break;
+                case validatedValues.message[1]:
+                    message = "Message is invalid";
+                    break;
+            
+                default:
+                    break;
+            }
+            Toast.Error(message);
         }
     })
 
