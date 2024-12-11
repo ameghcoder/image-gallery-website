@@ -71,7 +71,7 @@ const uploadInit = () => {
             e.target.setAttribute("disabled", "true");
 
             fetchDataVersion2(`/api/upload`, "POST", form)
-            .then(resp => {
+            .then(response => {
                 e.target.innerHTML = "Sign in";
                 e.target.removeAttribute("disabled");
 

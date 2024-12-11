@@ -43,7 +43,10 @@ const sign_in = () => {
                     if(response["type"] == "error"){
                         Toast.Error(response["message"]);
                     } else if(response["type"] == "success"){
-                        Toast.Success(response["message"]);
+                        Toast.Success(response["message"] + " in 3 seconds");
+                        setTimeout(() => {
+                            window.location.href = response["data"]["redirectionTo"]
+                        }, 3000)
                     } else{
                         throw new Error("Something went wrong");
                     }
