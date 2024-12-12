@@ -217,7 +217,7 @@ class Wallpaper{
         $search = strtolower($search);
 
         // filter the search query
-        $_removable_words = ['and', '4k', 'desktop', 'super', 'wallpaper', 'image', 'pic', 'picture', 'best', 'full', 'hd'];
+        $_removable_words = ['and', 'super', 'wallpaper', 'image', 'pic', 'picture', 'best', 'full'];
         for($i = 0; $i < count($_removable_words); $i++){
             $search = str_replace($_removable_words[$i],'', $search);
         }
