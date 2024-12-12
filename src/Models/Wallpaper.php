@@ -186,7 +186,7 @@ class Wallpaper{
 
         $query = "SELECT * FROM wallpapers WHERE filename=:filename";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam(":filename", $filename, PDO::PARAM_STR);
+        $stmt->bindParam(":filename", $filename);
 
         return $stmt->execute() ? $stmt->fetch(PDO::FETCH_ASSOC) : [];
     }
