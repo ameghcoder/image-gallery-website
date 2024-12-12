@@ -18,10 +18,10 @@
             data-src="https://gloztik.com/public/image/webp/{{ wallpaperCardPixel }}/{{ wallpaper.filename }}.webp" alt="{{ wallpaper.title }}" title="{{ wallpaper.title }}"
           >
           <span class="inline-flex flex-col bg-background/75 backdrop-blur-xl absolute -bottom-full group-hover:bottom-0 left-0 w-full p-2 md:p-4 rounded-t-md border-t border-border transition-all">
-            <span class="text-xs sm:text-sm font-mono">{{ wallpaper.resolution }}</span>
-            <span class="line-clamp-1 text-xs sm:text-sm font-medium">
+            <strong class="text-xs sm:text-sm font-mono">{{ wallpaper.resolution }}</strong>
+            <h2 class="line-clamp-1 text-xs sm:text-sm font-medium">
                 {{ wallpaper.title }}
-            </span>{{ wallpaper.url }}
+            </h2>
           </span>
         </a>
         <figcaption itemprop="caption description" class="sr-only">{{ wallpaper.description }}</figcaption>

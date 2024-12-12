@@ -31,8 +31,16 @@ class ImageUploader{
     }
 
     public function uploadWebp(){
-        $width_200 = $height_200 = $width_500 = $height_500 = $width_1000 = $height_1000 = $path_200 = $path_500 = $path_1000 = "";
+        $width_thumb = $height_thumb = $path_thumb = $width_200 = $height_200 = $width_500 = $height_500 = $width_1000 = $height_1000 = $path_200 = $path_500 = $path_1000 = "";
 
+        if($this->ORIGINALWidth < 50){
+            $width_thumb = $this->ORIGINALWidth;
+            $height_thumb = $this->ORIGINALHeight;
+        } else{
+            $width_thumb = 50;
+            $height_thumb = round(($this->ORIGINALHeight * $width_thumb) / $this->ORIGINALWidth);
+        }
+        
         if($this->ORIGINALWidth < 200){
             $width_200 = $this->ORIGINALWidth;
             $height_200 = $this->ORIGINALHeight;
@@ -57,11 +65,12 @@ class ImageUploader{
             $height_1000 = round(($this->ORIGINALHeight * $width_1000) / $this->ORIGINALWidth);
         }
 
+        $path_thumb = __DIR__ . "/../../" . $this->WEBP . $this->THUMB . $this->SLUG . ".webp";
         $path_200 = __DIR__ . "/../../" . $this->WEBP . $this->SMALL . $this->SLUG . ".webp";
         $path_500 = __DIR__ . "/../../" . $this->WEBP . $this->MEDIUM . $this->SLUG . ".webp";
         $path_1000 = __DIR__ . "/../../" . $this->WEBP . $this->LARGE . $this->SLUG . ".webp";
 
-        return  self::uploadWebpImage($width_200, $height_200, $path_200) && 
+        return self::uploadWebpImage($width_thumb, $height_thumb, $path_thumb) &&  self::uploadWebpImage($width_200, $height_200, $path_200) && 
                 self::uploadWebpImage($width_500, $height_500, $path_500) && 
                 self::uploadWebpImage($width_1000, $height_1000, $path_1000);
     }   
