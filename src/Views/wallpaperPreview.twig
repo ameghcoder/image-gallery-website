@@ -59,7 +59,7 @@
                                 include './ui/DownloadButton.twig' with 
                                 {
                                   btnName: "Download",
-                                  imgName: "high-quality-image",
+                                  imgName: "{{ wallpaper.title }}-downloaded-from-gloztik.com.jpeg",
                                   href: "https://gloztik.com/public/image/jpeg/" ~ wallpaper.filename ~ ".jpeg",
                                   btnStyle: "w-full py-2 lg:py-4 font-semibold md:text-lg rounded-md",
                                   iconUrl: download
