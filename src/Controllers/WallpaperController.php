@@ -89,16 +89,16 @@ class WallpaperController{
 
     public function uploadWallpaper(){
         // If user want to update their information then first check it is logged in or not then extract the user from the jwt token
-        // $getSessionUserId = self::checkUserSession();
-        // if(!$getSessionUserId){
-        //     JsonResponse::send(
-        //         "Unauthoriazed Access, You'll be logged out in 3 seconds",
-        //         "error",
-        //         [
-        //             "redirectionTo" => "/logout"
-        //         ]
-        //     );
-        // }
+        $getSessionUserId = self::checkUserSession();
+        if(!$getSessionUserId){
+            JsonResponse::send(
+                "Unauthoriazed Access, You'll be logged out in 3 seconds",
+                "error",
+                [
+                    "redirectionTo" => "/logout"
+                ]
+            );
+        }
 
 
         if(
@@ -117,7 +117,7 @@ class WallpaperController{
             "title" => Sanitizer::sanitizeTitle($_POST["title"]),
             "description" => Sanitizer::sanitizeDescription($_POST['description']),
             "wallpaperName" => $_FILES['wallpaper'],
-            "id" => 1
+            "id" => $getSessionUserId
         ];
 
         if(
@@ -147,6 +147,19 @@ class WallpaperController{
                 $message,
                 "error"
             );
+        }
+    }
+
+    public function updateStatis($type, $id){
+        if($type === "download"){
+            $resp = Wallpaper::updateDownloads($id);
+            return $resp ? "Done" : "Error";
+        } else if($type === "share"){
+            $resp = Wallpaper::updateShares($id);
+            return $resp ? "Done" : "Error";
+        } else if($type === "view"){
+            $resp = Wallpaper::updateViews($id);
+            return $resp ? "Done" : "Error";
         }
     }
 }

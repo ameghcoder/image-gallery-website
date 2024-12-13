@@ -196,16 +196,15 @@ $router->map('GET', '/wallpaper/[**:pageName]?', function($pageName = null) use 
         $wallpaperController = new WallpaperController(false);
         $wallpaperData = $wallpaperController->getSpecificWallpaper($pageName);
 
-if(empty($wallpaperData)){
+        if(empty($wallpaperData)){
             notFoundPage($twig);
         }
+        
         $query = $wallpaperData['title'];
         $range = 30;
 
         $relatedWallpapers = $wallpaperController->getRelatedWallpaper($query, $pageNumber, $range);
         $totalWallpapers = $wallpaperController->getRelatedWallpaperCount($query);
-
-        
 
         // Calculate Pagination
         $currentPage = $nextPage = $previousPage = 0;

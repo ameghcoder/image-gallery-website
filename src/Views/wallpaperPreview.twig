@@ -61,7 +61,7 @@
                                   btnName: "Download",
                                   imgName: wallpaper.title ~ "-downloaded-from-gloztik.com.jpeg",
                                   href: "https://gloztik.com/public/image/jpeg/" ~ wallpaper.filename ~ ".jpeg",
-                                  btnStyle: "w-full py-2 lg:py-4 font-semibold md:text-lg rounded-md",
+                                  btnStyle: "w-full py-2 lg:py-4 font-semibold md:text-lg rounded-md download-wallpaper-btn-cls",
                                   iconUrl: download
                                 }
                               %}
@@ -82,19 +82,19 @@
                               <div class="space-y-2">
                                 <strong class="flex justify-between border-b border-border py-2">
                                   <strong>Total Views</strong>
-                                  <span class="font-normal font-mono">
+                                  <span class="font-normal font-mono" id="wallpaperTotalView">
                                     {{ wallpaper.views }}
                                   </span>
                                 </strong>
                                 <strong class="flex justify-between border-b border-border py-2">
                                   <strong>Downloads</strong>
-                                  <span class="font-normal font-mono">
+                                  <span class="font-normal font-mono" id="wallpaperTotalDownloads">
                                     {{ wallpaper.downloads }}
                                   </span>
                                 </strong>
                                 <strong class="flex justify-between border-b border-border py-2">
                                   <strong>Shares</strong>
-                                  <span class="font-normal font-mono">
+                                  <span class="font-normal font-mono" id="wallpaperTotalShares">
                                     {{ wallpaper.shares }}
                                   </span>
                                 </strong>
@@ -245,7 +245,17 @@
                 text: "I found this amazing website! For downloading 4k wallpapers for Android, iPhone and Desktop.",
                 url: currentUrl, // Replace with your URL
               });
-              console.log('Content shared successfully!');
+              
+              const form = new FormData();
+              form.append('id', {{ wallpaper.id }});
+              form.append('type', "share");
+              fetchDataVersion2(api, "POST", form)
+              .then(resp => {
+                $id("wallpaperTotalShares").innerText = parseInt($id("wallpaperTotalShares").innerText) + 1;
+              })
+              .catch(err => {
+                console.error(err);
+              })
             } catch (error) {
               console.error(`Error sharing: ${error}`);
             }
@@ -253,5 +263,40 @@
             console.info('Web Share API not supported in your browser.');
           }
         });
+
+        const wallpaperPreview = () => {
+          const api = "/api/updateStatis";
+
+          console.log({{ wallpaper.id }});
+
+          const form = new FormData();
+          form.append('id', {{ wallpaper.id }});
+          form.append('type', "view");
+
+          // Update Views
+          fetchDataVersion2(api, "POST", form)
+          .then(resp => {
+            $id("wallpaperTotalView").innerText = parseInt($id("wallpaperTotalView").innerText) + 1 ;
+          })
+          .catch(err => {
+            console.error(err);
+          })
+
+          // Update Downloads
+          $(".download-wallpaper-btn-cls").addEventListener("click", () => {
+            form.append("type", "download");
+
+            fetchDataVersion2(api, "POST", form)
+            .then(resp => {
+              $id("wallpaperTotalDownloads").innerText = parseInt($id("wallpaperTotalDownloads").innerText) + 1 ;
+            })
+            .catch(err => {
+              console.error(err);
+            })
+          })
+
+        }
+
+        document.readyState == "interactive" ? wallpaperPreview() : document.addEventListener("DOMContentLoaded", wallpaperPreview());
       </script>
 {% endblock %}

@@ -176,3 +176,31 @@ $router->map("POST", '/api/desktopWallpaper', function() use ($twig){
 
 // Api for uploading wallpapers
 $router->map('POST', '/api/upload', "WallpaperController@uploadWallpaper");
+
+// Api for update statis
+$router->map('POST', '/api/updateStatis', function() {
+    if(
+        isset($_POST['type']) &&
+        isset($_POST['id']) &&
+        !empty($_POST['type']) &&
+        !empty($_POST['id'])
+    ){
+        $data = [
+            "type" => Sanitizer::sanitizeString($_POST['type']),
+            "id" => Sanitizer::sanitizeNumber($_POST['id'])
+        ];
+
+        if(
+            Validate::validateNumber($data['id']) &&
+            Validate::validateString($data['type'])
+        ){
+            $wallpaperController = new WallpaperController();
+            $wallpaperController->updateStatis($data['type'], $data['id']);
+        } else{
+            echo "Invalid";
+        }
+        
+    } else{
+        echo "Error";
+    }
+});

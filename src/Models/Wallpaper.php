@@ -304,4 +304,32 @@ class Wallpaper{
     
         return $stmt->execute() ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
     }
+
+    public static function updateDownloads($id){
+        $conn = self::dbConnection();
+
+        $query = "UPDATE wallpapers SET downloads = downloads + 1 WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+
+        return $stmt->execute() ? true : false;
+    }
+    public static function updateShares($id){
+        $conn = self::dbConnection();
+
+        $query = "UPDATE wallpapers SET shares = shares + 1 WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+
+        return $stmt->execute() ? true : false;
+    }
+    public static function updateViews($id){
+        $conn = self::dbConnection();
+
+        $query = "UPDATE wallpapers SET views = views + 1 WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+
+        return $stmt->execute() ? true : false;
+    }
 }
