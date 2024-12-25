@@ -1,0 +1,52 @@
+{% extends './layout.twig' %}
+
+{% block title %}
+    Explore 4k Desktop, Android, iPhone Wallpapers | 1000+ of Premium Wallpapers Free
+{% endblock %}
+
+{% block content %}
+        <!-- Wallpaper Preview Container -->
+    <div class="w-full min-h-screen border-t border-border p-2 sm:p-4 md:p-8 ">
+        <div class="w-full h-full relative">
+            <div class="w-full h-full p-2 md:p-4">
+                <div class="wallpaper-container">
+                    <div class="flex flex-col gap-4 items-start">
+                        <h1 class="text-lg md:text-2xl lg:text-4xl text-muted-foreground capitalize">
+                            Desktop, Android, iPhone Wallpapers
+                        </h1>
+                        <strong>#Explore</strong>
+                        <div class="w-full p-2 relative box-border mt-0 mb-0">
+                            {% if wallpapers is null %}
+                                <div class="flex items-center justify-center w-full">
+                                    <span class="text-center text-4xl uppercase">
+                                        No Wallpaper Found
+                                    </span>
+                                </div>
+                            {% else %}
+                                <div class="w-full max-w-screen-lg columns-2 sm:columns-3 md:columns-4 gap-2 md:gap-4 mx-auto" style="max-width: 1440px">
+                                    {% include './ui/WallpaperCard.twig' with wallpapers %}
+                                </div>
+                            {% endif %}
+                            <div class="w-full flex items-center justify-center border border-border">
+                                {# Ads by Google #}
+                                <!-- Wallpaper Preview Page -->
+                                <ins class="adsbygoogle"
+                                style="display:block;margin:auto;"
+                                data-ad-client="ca-pub-2522440384764425"
+                                data-ad-slot="5915408091"
+                                data-ad-format="auto"
+                                data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                            </div>
+                            <div class="w-full flex flex-col gap-4 p-2 md:p-4 items-center justify-center">
+                                {% include './ui/Pagination.twig' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

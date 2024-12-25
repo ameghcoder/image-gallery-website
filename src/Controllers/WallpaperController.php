@@ -42,8 +42,13 @@ class WallpaperController{
         }
     }
 
-    public function getRecentWallpaper($from, $limit){
-        return Wallpaper::getRangeWallpaper($from, $limit);
+    public function getTotal(){
+        return Wallpaper::getTotal();
+    }
+
+    public function getRecentWallpaper($page, $range){
+        $from = (($page * $range) - $range);
+        return Wallpaper::getRangeWallpaper($from, $range);
     }
 
     public function getRelatedWallpaper($search, $page, $range = 30){

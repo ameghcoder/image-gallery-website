@@ -115,6 +115,67 @@ $router->map('GET', '/', function() use ($twig, $images) {
     echo $twig->render('home.twig', $templateData);
 });
 
+// Explore Recent Wallpapers
+// Search Page
+$router->map('GET', '/explore', function() use ($twig, $images){
+    addCSRFToken($twig);
+
+    $pageNumber = 1;
+    $range = 30;
+    if(isset($_GET['page']) && !empty($_GET['page'])){
+        $pageNumber = $_GET['page'];
+    }
+    
+    $wallpaperController = new WallpaperController(false);
+    $exploredWallpapers = $wallpaperController->getRecentWallpaper($pageNumber, $range);
+    
+    $total = $wallpaperController->getTotal();
+
+    // Calculate Pagination 
+    $nextPage = $previousPage = 0;
+    $totalPages = floor($total/$range);
+    $extraPage = $total - ($totalPages * $range);
+
+    $lastPage = $extraPage == 0 ? $totalPages : $totalPages + 1;
+
+    // Next Page Number
+    if($pageNumber >= $lastPage){
+        $nextPage = -1;
+    } else{
+        $nextPage = $pageNumber + 1;
+    }
+
+    // Previous Page Number
+    if($pageNumber <= 1){
+        $previousPage = -1;
+    } else {
+        $previousPage = $pageNumber - 1;
+    }
+
+    $templateData = [
+        "wallpapers" => "",
+        "wallpaperCardPixel" => "500",
+        "endpoint" => "search",
+        "wallpaper" => [
+            "title" => "Explore 4k Desktop, Android, iPhone Wallpapers | 1000+ of Premium Wallpapers Free",
+            "description" => "Explore a stunning collection of Premium 4k high-quality wallpapers for PC, desktop, Android, and iPhone.",
+            "imgUrl" => "https://gloztik.com/public/assets/img/images/desktop-wallpapers.jpg",
+            "url" => "https://gloztik.com/explore"
+        ],
+        "currentPage" => $pageNumber,
+        "nextPage" => $nextPage,
+        "previousPage" => $previousPage,
+    ];
+
+    if(empty($exploredWallpapers)){
+        $templateData["wallpapers"] = [];
+    } else{
+        $templateData["wallpapers"] = $exploredWallpapers;
+    }
+
+    echo $twig->render("explore.twig", $templateData);
+});
+
 // Category Routes
 $router->map('GET', '/category/[**:category]?', function ($category = null) use ($twig){
     addCSRFToken($twig);

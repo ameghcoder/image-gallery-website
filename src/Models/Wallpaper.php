@@ -191,6 +191,22 @@ class Wallpaper{
         return $stmt->execute() ? $stmt->fetch(PDO::FETCH_ASSOC) : [];
     }
 
+    public static function getTotal(){
+        $conn = self::dbConnection();
+
+        $query = "SELECT COUNT(*) AS total FROM wallpapers";
+        $stmt = $conn->prepare($query);
+        $response = $stmt->execute();
+
+        if($response){
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $data = $data['total'];
+
+            return $data;
+        }
+    }
+
     public static function getRangeWallpaper($from, $range){
         $conn = self::dbConnection();
 
