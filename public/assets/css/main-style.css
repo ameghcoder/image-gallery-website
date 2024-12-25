@@ -1259,6 +1259,10 @@ label {
   max-width: none;
 }
 
+.max-w-screen-lg {
+  max-width: 1024px;
+}
+
 .max-w-screen-sm {
   max-width: 640px;
 }
@@ -2302,6 +2306,11 @@ label {
 
   .lg\:h-36 {
     height: 9rem;
+  }
+
+  .lg\:columns-5 {
+    -moz-columns: 5;
+         columns: 5;
   }
 
   .lg\:grid-cols-2 {
