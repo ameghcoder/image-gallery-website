@@ -59,7 +59,7 @@ $router->map('GET', '/', function() use ($twig, $images) {
     addCSRFToken($twig);
 
     $wallpaperController = new WallpaperController(false);
-    $recentWallpaper = $wallpaperController->getRecentWallpaper(0, 20);
+    $recentWallpaper = $wallpaperController->getRecentWallpaper(1, 20);
 
     // Get Category Content
     $category = [];
