@@ -3,7 +3,7 @@ const sitemapInit = () => {
         e.target.innerText = "Wait ...";
         e.target.setAttribute("disabled", "true");
 
-        fetchDataVersion2(`/api/sitemap`, "POST", form)
+        fetchDataVersion2(`/api/sitemap`, "POST")
         .then(response => {
             e.target.innerHTML = "Update Sitemap";
             e.target.removeAttribute("disabled");
