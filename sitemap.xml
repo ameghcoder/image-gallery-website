@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-<url>
-    <loc>https://gloztik.com/android-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url><url>
-    <loc>https://gloztik.com/iphone-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url><url>
-    <loc>https://gloztik.com/desktop-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
+  <url>
+      <loc>https://gloztik.com/android-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/iphone-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/desktop-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/abstract-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/animals-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/anime-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/cars-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/flowers-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/gaming-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/girl-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/god-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
+  <url>
+      <loc>https://gloztik.com/category/nature-wallpapers</loc>
+      <lastmod>2024-12-11</lastmod>
+  </url>
 
-<url>
-    <loc>https://gloztik.com/</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/abstract-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/animals-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/anime-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/cars-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/flowers-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/gaming-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/girl-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/god-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-<url>
-    <loc>https://gloztik.com/category/nature-wallpapers</loc>
-    <lastmod>2024-12-11</lastmod>
-</url>
-
-<url>
+  <url>
     <loc>https://gloztik.com/wallpaper/A-portrait-of-a-yound-woman-with-a-fierce-expression10-February-2024-02-31-52-PM</loc>
     <lastmod>2024-12-11</lastmod>
     <image:image>

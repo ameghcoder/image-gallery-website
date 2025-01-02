@@ -7,7 +7,9 @@ use App\Controllers\WallpaperController;
 use App\Helpers\JsonResponse;
 use App\Helpers\Sanitizer;
 use App\Helpers\Validate;
+use App\Services\AuthService;
 use App\Services\SessionManagement;
+use App\Services\SitemapCreator;
 
 global $twig, $icons, $images;
 
@@ -203,4 +205,44 @@ $router->map('POST', '/api/updateStatis', function() {
     } else{
         echo "Error";
     }
+});
+
+// Api for generate sitemap
+$router->map('POST', '/api/sitemap', function() {
+
+    try{
+        $AuthService = new AuthService("/");    
+        $UserId = $AuthService->verifyJWT("user");
+        if($UserId){
+            $sitemapCreator = new SitemapCreator();
+            $resp = $sitemapCreator->generateSitemap();
+
+            if($resp){
+                JsonResponse::send(
+                    $resp,
+                    "success"  
+                );
+            } else{
+                throw new Exception("Failed to save the sitemap file");
+            }
+
+        } else{
+            JsonResponse::send(
+                "Unauthoriazed Access, You'll be logged out in 3 seconds",
+                "error",
+                [
+                    "redirectionTo" => "/logout"
+                ]
+            );
+        }
+    } catch(Exception $e){
+        JsonResponse::send(
+            "An error occurred",
+            "error",
+            [
+                "message" => $e->getMessage()
+            ]
+        );
+    }
+
 });

@@ -6,5 +6,10 @@
 {% endblock %}
 
 {% block dashboardContent %}
-    
+    <div class="flex flex-col gap-4">
+        <h2 class="text-2xl md:text-4xl">Sitemap</h2>
+        <p>Using below button you can update your sitemap, when you upload wallpaper and want to add latest wallpapers in the sitemap click to below button it will add latest wallpaper in the sitemap.</p>
+        <button id="update-sitemap" class="bg-primary p-2 md:p-4 font-semibold rounded-lg" type="button">Update Sitemap</button>
+    </div>
+    <script src="/public/assets/js/sitemap.js?version=1.0.0"></script>
 {% endblock %}
