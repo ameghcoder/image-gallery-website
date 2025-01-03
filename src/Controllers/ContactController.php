@@ -59,8 +59,36 @@ class ContactController{
                 );
             }
         } else{
+            $msg = "";
+
+            switch (false) {
+                case Validate::validateFullName($data['name']):
+                    $msg = "Name value is invalid";
+                    break;
+                
+                case Validate::validateEmail($data['email']):
+                    $msg = "Email value is invalid";
+                    break;
+
+                case Validate::validateString($data['country']):
+                    $msg = "Country value is invalid";
+                    break;
+
+                case Validate::validateString($data['subject']):
+                    $msg = "Subject value is invalid";
+                    break;
+
+                case Validate::validateDescription($data['msg']):
+                    $msg = "Message value is invalid";
+                    break;
+
+                default:
+                    $msg = "Something goes wrong, Reload the page and try again";
+                    break;
+            }
+
             JsonResponse::send(
-                "Some values are invalid", 
+                $msg, 
                 "error"
             );
         }
