@@ -72,6 +72,9 @@ const contactUsInit = () => {
                         Toast.Error(response["message"]);
                     } else if(response["type"] == "success"){
                         Toast.Success(response["message"]);
+                        Object.keys(validatedValues).forEach(key => {
+                            elements[key].value = "";
+                        })
                     } else{
                         throw new Error("Something went wrong");
                     }
