@@ -38,7 +38,8 @@
     <link rel="stylesheet" href="/public/assets/css/compressed/main-style.css?version=1.2.0">
     {# Base Script #}
     <script type="text/javascript" src="/public/assets/js/compressed/baseScriptSmall.js?version=1.0.0"></script>
-    
+    {# AMP Code - Google AdSense #}
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
     <title>
         {% block title %}
         <!-- Title goes here -->
@@ -47,6 +48,8 @@
 </head>
 
 <body class="relative">
+    {# AMP Auto Ad Code - Google AdSense #}
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-2522440384764425"></amp-auto-ads>
     <div class="root-container">
         {% if homeHeader is defined %}
             {% include './components/homeHeader.twig' %} <!-- Header -->
