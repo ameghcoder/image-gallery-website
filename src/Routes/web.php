@@ -10,12 +10,13 @@ use App\Services\SessionManagement;
 global $twig, $icons, $images;
 
 
-function addCSRFToken($twig): void{
+function addCSRFToken($twig): void
+{
     // CSRF Token
     $CSRF = new SessionManagement();
     // Generate and add token to session
     $CSRF->AddCSRF();  // Store the token in the session
-    
+
     // Get the token value from the session to use in the meta tag
     $tokenValue = $CSRF->GetTokenValue();
     $twig->addGlobal("csrfToken", $tokenValue);  // Set csrfToken in header
@@ -23,7 +24,8 @@ function addCSRFToken($twig): void{
 
 // Functions for 404 Page 
 // Why Function? For more customization and usability
-function notFoundPage($twig){
+function notFoundPage($twig)
+{
     header("HTTP/1.0 404 Not Found");
     echo $twig->render("404.twig");
     exit();
@@ -32,21 +34,22 @@ function notFoundPage($twig){
 // Function for redirection
 // Why this Function? 
 // First check if this user already looged in or not, For redirect user to the homepage if user already logged in
-function checkUserSession($ifNotThenPath = null, $ifYesThenPath = null, $redirection = true){
+function checkUserSession($ifNotThenPath = null, $ifYesThenPath = null, $redirection = true)
+{
     $AuthService = new AuthService("/");
     $SessionId = $AuthService->verifyJWT("user");
-    if($SessionId){
-        if($redirection){
-            if($ifYesThenPath !== null){
+    if ($SessionId) {
+        if ($redirection) {
+            if ($ifYesThenPath !== null) {
                 header("Location: $ifYesThenPath");
-            } else{
+            } else {
                 header("Location: /");
             }
             exit();
-        } else{
+        } else {
             return $SessionId;
         }
-    } else if($ifNotThenPath !== null){
+    } else if ($ifNotThenPath !== null) {
         header("Location: $ifNotThenPath");
         exit();
     }
@@ -55,7 +58,7 @@ function checkUserSession($ifNotThenPath = null, $ifYesThenPath = null, $redirec
 
 // Define Routes
 // Home
-$router->map('GET', '/', function() use ($twig, $images) {
+$router->map('GET', '/', function () use ($twig, $images) {
     addCSRFToken($twig);
 
     $wallpaperController = new WallpaperController(false);
@@ -64,7 +67,7 @@ $router->map('GET', '/', function() use ($twig, $images) {
     // Get Category Content
     $category = [];
     $categoryPath = __DIR__ . '/../../public/assets/json/categories.json';
-    if(file_exists($categoryPath)){ 
+    if (file_exists($categoryPath)) {
         $getContent = file_get_contents($categoryPath);
         $category = json_decode($getContent, true);
     }
@@ -72,27 +75,27 @@ $router->map('GET', '/', function() use ($twig, $images) {
     $templateData = [
         "tags" => [
             [
-                "url"=> "/search?q=girl",
+                "url" => "/search?q=girl",
                 "text" => "girl"
             ],
             [
-                "url"=> "/search?q=flower",
+                "url" => "/search?q=flower",
                 "text" => "flower"
             ],
             [
-                "url"=> "/search?q=bird",
+                "url" => "/search?q=bird",
                 "text" => "bird"
             ],
             [
-                "url"=> "/search?q=danger",
+                "url" => "/search?q=danger",
                 "text" => "danger"
             ],
             [
-                "url"=> "/search?q=car",
+                "url" => "/search?q=car",
                 "text" => "car"
             ],
             [
-                "url"=> "/search?q=anime",
+                "url" => "/search?q=anime",
                 "text" => "anime"
             ],
             [
@@ -117,36 +120,36 @@ $router->map('GET', '/', function() use ($twig, $images) {
 
 // Explore Recent Wallpapers
 // Search Page
-$router->map('GET', '/explore', function() use ($twig, $images){
+$router->map('GET', '/explore', function () use ($twig, $images) {
     addCSRFToken($twig);
 
     $pageNumber = 1;
     $range = 30;
-    if(isset($_GET['page']) && !empty($_GET['page'])){
+    if (isset($_GET['page']) && !empty($_GET['page'])) {
         $pageNumber = $_GET['page'];
     }
-    
+
     $wallpaperController = new WallpaperController(false);
     $exploredWallpapers = $wallpaperController->getRecentWallpaper($pageNumber, $range);
-    
+
     $total = $wallpaperController->getTotal();
 
     // Calculate Pagination 
     $nextPage = $previousPage = 0;
-    $totalPages = floor($total/$range);
+    $totalPages = floor($total / $range);
     $extraPage = $total - ($totalPages * $range);
 
     $lastPage = $extraPage == 0 ? $totalPages : $totalPages + 1;
 
     // Next Page Number
-    if($pageNumber >= $lastPage){
+    if ($pageNumber >= $lastPage) {
         $nextPage = -1;
-    } else{
+    } else {
         $nextPage = $pageNumber + 1;
     }
 
     // Previous Page Number
-    if($pageNumber <= 1){
+    if ($pageNumber <= 1) {
         $previousPage = -1;
     } else {
         $previousPage = $pageNumber - 1;
@@ -167,9 +170,9 @@ $router->map('GET', '/explore', function() use ($twig, $images){
         "previousPage" => $previousPage,
     ];
 
-    if(empty($exploredWallpapers)){
+    if (empty($exploredWallpapers)) {
         $templateData["wallpapers"] = [];
-    } else{
+    } else {
         $templateData["wallpapers"] = $exploredWallpapers;
     }
 
@@ -177,23 +180,23 @@ $router->map('GET', '/explore', function() use ($twig, $images){
 });
 
 // Category Routes
-$router->map('GET', '/category/[**:category]?', function ($category = null) use ($twig){
+$router->map('GET', '/category/[**:category]?', function ($category = null) use ($twig) {
     addCSRFToken($twig);
-    if(!empty($category) || $category == null){
+    if (!empty($category) || $category == null) {
         $categoryData = [];
         $categoryPath = __DIR__ . '/../../public/assets/json/categories.json';
-        if(file_exists($categoryPath)){ 
+        if (file_exists($categoryPath)) {
             $getContent = file_get_contents($categoryPath);
             $categoryData = json_decode($getContent, true);
-        } else{
+        } else {
             notFoundPage($twig);
         }
 
-        if(key_exists($category, $categoryData)){
+        if (key_exists($category, $categoryData)) {
             $query = $categoryData[$category]['query'];
             $wallpaperController = new WallpaperController(false);
             $searchedWallpapers = $wallpaperController->getRelatedWallpaper($query, 1, 25);
-            
+
             $templateData = [
                 "wallpapers" => "",
                 "query" => $query,
@@ -207,30 +210,30 @@ $router->map('GET', '/category/[**:category]?', function ($category = null) use 
                 ]
             ];
 
-            if(empty($searchedWallpapers)){
+            if (empty($searchedWallpapers)) {
                 $templateData["wallpapers"] = [];
-            } else{
+            } else {
                 $templateData["wallpapers"] = $searchedWallpapers;
             }
 
             echo $twig->render("search.twig", $templateData);
-        } else{
+        } else {
             notFoundPage($twig);
         }
-    } else{
+    } else {
         header("Location: /");
         exit();
     }
 });
 
 // Load PWA Assets for PWA support and favicon also
-$router->map('GET', '/pwa/[**:pwa]?', function($pwa = null) use ($twig) {
-    if(!empty($pwa)){
+$router->map('GET', '/pwa/[**:pwa]?', function ($pwa = null) use ($twig) {
+    if (!empty($pwa)) {
         $imageDirectory = __DIR__ . '/../../pwa/';
 
         $imagePath = $imageDirectory . $pwa;
 
-        if($pwa && file_exists($imagePath)){
+        if ($pwa && file_exists($imagePath)) {
             $MimeType = mime_content_type($imagePath);
 
             header('Content-Type: ' . $MimeType);
@@ -238,29 +241,29 @@ $router->map('GET', '/pwa/[**:pwa]?', function($pwa = null) use ($twig) {
 
             // output image content
             readfile($imagePath);
-        } else{
+        } else {
             notFoundPage($twig);
         }
-    } else{
+    } else {
         notFoundPage($twig);
     }
 });
 
 // Wallpapers Route
-$router->map('GET', '/wallpaper/[**:pageName]?', function($pageName = null) use ($twig, $images) {
+$router->map('GET', '/wallpaper/[**:pageName]?', function ($pageName = null) use ($twig, $images) {
     addCSRFToken($twig);
 
-    if($pageName != null){
+    if ($pageName != null) {
         $pageNumber = isset($_GET["page"]) ? $_GET["page"] : false;
         $pageNumber = is_numeric($pageNumber) ? $pageNumber : 1;
 
         $wallpaperController = new WallpaperController(false);
         $wallpaperData = $wallpaperController->getSpecificWallpaper($pageName);
 
-        if(empty($wallpaperData)){
+        if (empty($wallpaperData)) {
             notFoundPage($twig);
         }
-        
+
         $query = $wallpaperData['title'];
         $range = 30;
 
@@ -269,22 +272,22 @@ $router->map('GET', '/wallpaper/[**:pageName]?', function($pageName = null) use 
 
         // Calculate Pagination
         $currentPage = $nextPage = $previousPage = 0;
-        $totalPages = floor($totalWallpapers/$range);
+        $totalPages = floor($totalWallpapers / $range);
         $extraPage = $totalWallpapers - ($totalPages * $range);
 
         $lastPage = $extraPage == 0 ? $totalPages : $totalPages + 1;
 
         // Next Page Number
-        if($pageNumber >= $lastPage){
+        if ($pageNumber >= $lastPage) {
             $nextPage = -1;
-        } else{
+        } else {
             $nextPage = $pageNumber + 1;
         }
 
         // Previous Page Number
-        if($pageNumber <= 1){
+        if ($pageNumber <= 1) {
             $previousPage = -1;
-        } else{
+        } else {
             $previousPage = $pageNumber - 1;
         }
 
@@ -300,23 +303,23 @@ $router->map('GET', '/wallpaper/[**:pageName]?', function($pageName = null) use 
 
 
         echo $twig->render('wallpaperPreview.twig', $templateData);
-    } else{
+    } else {
         notFoundPage($twig);
     }
 });
 
 // Search Page
-$router->map('GET', '/search', function() use ($twig, $images){
+$router->map('GET', '/search', function () use ($twig, $images) {
     addCSRFToken($twig);
-    
-    if(isset($_GET['q']) && !empty($_GET['q'])){
+
+    if (isset($_GET['q']) && !empty($_GET['q'])) {
         $query = $_GET['q'];
 
         $query = Sanitizer::sanitizeString($query);
-        if(Validate::validateSearchString($query)){
+        if (Validate::validateSearchString($query)) {
             $wallpaperController = new WallpaperController(false);
             $searchedWallpapers = $wallpaperController->getRelatedWallpaper($query, 1, 25);
-            
+
             $templateData = [
                 "wallpapers" => "",
                 "query" => $query,
@@ -330,17 +333,17 @@ $router->map('GET', '/search', function() use ($twig, $images){
                 ]
             ];
 
-            if(empty($searchedWallpapers)){
+            if (empty($searchedWallpapers)) {
                 $templateData["wallpapers"] = [];
-            } else{
+            } else {
                 $templateData["wallpapers"] = $searchedWallpapers;
             }
 
             echo $twig->render("search.twig", $templateData);
-        } else{
+        } else {
             header("Location: /");
         }
-    } else{
+    } else {
         header("Location: /");
     }
 });
@@ -348,10 +351,10 @@ $router->map('GET', '/search', function() use ($twig, $images){
 // Android, iPhone and Desktop Wallpapers Route
 $router->map('GET', '/android-wallpapers', function () use ($twig) {
     addCSRFToken($twig);
-    
+
     $wallpaperController = new WallpaperController(false);
     $searchedWallpapers = $wallpaperController->getMobileWallpaper(1, 25);
-    
+
     $templateData = [
         "wallpapers" => "",
         "query" => "Android Wallpapers",
@@ -365,9 +368,9 @@ $router->map('GET', '/android-wallpapers', function () use ($twig) {
         ]
     ];
 
-    if(empty($searchedWallpapers)){
+    if (empty($searchedWallpapers)) {
         $templateData["wallpapers"] = [];
-    } else{
+    } else {
         $templateData["wallpapers"] = $searchedWallpapers;
     }
 
@@ -376,10 +379,10 @@ $router->map('GET', '/android-wallpapers', function () use ($twig) {
 
 $router->map('GET', '/iphone-wallpapers', function () use ($twig) {
     addCSRFToken($twig);
-    
+
     $wallpaperController = new WallpaperController(false);
     $searchedWallpapers = $wallpaperController->getMobileWallpaper(1, 25);
-    
+
     $templateData = [
         "wallpapers" => "",
         "query" => "iPhone Wallpapers",
@@ -393,21 +396,21 @@ $router->map('GET', '/iphone-wallpapers', function () use ($twig) {
         ]
     ];
 
-    if(empty($searchedWallpapers)){
+    if (empty($searchedWallpapers)) {
         $templateData["wallpapers"] = [];
-    } else{
+    } else {
         $templateData["wallpapers"] = $searchedWallpapers;
     }
 
     echo $twig->render("search.twig", $templateData);
 });
 
-$router->map('GET', '/desktop-wallpapers', function() use ($twig){
+$router->map('GET', '/desktop-wallpapers', function () use ($twig) {
     addCSRFToken($twig);
-    
+
     $wallpaperController = new WallpaperController(false);
     $searchedWallpapers = $wallpaperController->getDesktopWallpaper(1, range: 50);
-    
+
     $templateData = [
         "wallpapers" => "",
         "query" => "Desktop Wallpapers",
@@ -423,9 +426,9 @@ $router->map('GET', '/desktop-wallpapers', function() use ($twig){
         ]
     ];
 
-    if(empty($searchedWallpapers)){
+    if (empty($searchedWallpapers)) {
         $templateData["wallpapers"] = [];
-    } else{
+    } else {
         $templateData["wallpapers"] = $searchedWallpapers;
     }
 
@@ -433,35 +436,35 @@ $router->map('GET', '/desktop-wallpapers', function() use ($twig){
 });
 
 // Dashboard Routes
-$router->map('GET', '/login', function() use ($twig, $images) {
+$router->map('GET', '/login', function () use ($twig, $images) {
     checkUserSession();
     addCSRFToken($twig);
     echo $twig->render("./dashboard/login.twig");
 });
 
-$router->map("GET", "/logout", function() {
+$router->map("GET", "/logout", function () {
     $AuthService = new AuthService("/");
-    if($AuthService->destroyJWT("user")){
+    if ($AuthService->destroyJWT("user")) {
         header("Location: /");
         exit();
     }
 });
 
-$router->map('GET', '/dashboard/[**:pageName]?', function($pageName = null) use ($twig, $images) {
+$router->map('GET', '/dashboard/[**:pageName]?', function ($pageName = null) use ($twig, $images) {
     // Check user session is still active
     checkUserSession("/login", null, false);
-    
+
     addCSRFToken($twig);
 
-    if($pageName == null){
+    if ($pageName == null) {
         notFoundPage($twig);
-    } else{
+    } else {
         $templateData = [];
 
-        if($pageName == "upload"){
+        if ($pageName == "upload") {
             $templateData["dashboardTitle"] = "Upload Wallpapers";
             echo $twig->render("./dashboard/upload.twig", $templateData);
-        } else if($pageName == "overview"){
+        } else if ($pageName == "overview") {
             $templateData["dashboardTitle"] = "Overview";
             echo $twig->render("./dashboard/overview.twig", $templateData);
         }
@@ -469,23 +472,23 @@ $router->map('GET', '/dashboard/[**:pageName]?', function($pageName = null) use 
 });
 
 // Move Old URL to New URL Permanently
-$router->map('GET', '/page/mobile-wallpaper', function(){
+$router->map('GET', '/page/mobile-wallpaper', function () {
     header("Location: /android-wallpapers", true, 301);
     exit();
 });
-$router->map('GET', '/page/desktop-wallpaper', function(){
+$router->map('GET', '/page/desktop-wallpaper', function () {
     header("Location: /desktop", true, 301);
     exit();
 });
 
 
 // Additional Pages
-$router->map('GET', '/page/[**:pageName]?', function($pageName = null) use ($twig){
+$router->map('GET', '/page/[**:pageName]?', function ($pageName = null) use ($twig) {
     addCSRFToken($twig);
 
-    if($pageName == null){
+    if ($pageName == null) {
         notFoundPage($twig);
-    } else{
+    } else {
         $templateData = [
             "wallpaper" => [
                 "title" => $pageName,
@@ -495,13 +498,13 @@ $router->map('GET', '/page/[**:pageName]?', function($pageName = null) use ($twi
             ]
         ];
 
-        if($pageName == "about"){
+        if ($pageName == "about") {
             echo $twig->render("./info/about.twig");
-        } else if($pageName == "contact"){
+        } else if ($pageName == "contact") {
             echo $twig->render("./info/contact.twig");
-        } else if($pageName == "terms-of-use"){
+        } else if ($pageName == "terms-of-use") {
             echo $twig->render("./info/terms-of-use.twig");
-        } else if($pageName == "privacy-policy"){
+        } else if ($pageName == "privacy-policy") {
             echo $twig->render("./info/privacy-policy.twig");
         } else {
             notFoundPage($twig);
@@ -510,23 +513,11 @@ $router->map('GET', '/page/[**:pageName]?', function($pageName = null) use ($twi
 });
 
 // other important routes
-$router->map('GET', '/sitemap.xml', function(){
+$router->map('GET', '/sitemap.xml', function () {
     // output file
     readfile(__DIR__ . '/../../sitemap.xml');
 });
-$router->map('GET', '/ads.txt', function(){
-    // output file
-    readfile(__DIR__ . '/../../ads.txt');
-});
-$router->map('GET', '/bc648d883815416b882d0bb5a9cecf76.txt', function(){
-    // output file
-    readfile(__DIR__ . '/../../bc648d883815416b882d0bb5a9cecf76.txt');
-});
-$router->map('GET', '/yandex_e72c28597d24ab3c.html', function(){
-    // output file
-    readfile(__DIR__ . '/../../yandex_e72c28597d24ab3c.html');
-});
-$router->map('GET', '/robots.txt', function(){
+$router->map('GET', '/robots.txt', function () {
     // output file
     readfile(__DIR__ . '/../../robots.txt');
 });
